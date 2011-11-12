@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Teatimer</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      /* Override some defaults */
+      html, body {
+        background-color: #eee;
+      }
+      body {
+        padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
+      }
+      .container > footer p {
+        text-align: center; /* center align it with the container */
+      }
+      .container {
+        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+      }
+
+      /* The white background content wrapper */
+      .content {
+        background-color: #fff;
+        padding: 20px;
+        margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+        -webkit-border-radius: 0 0 6px 6px;
+           -moz-border-radius: 0 0 6px 6px;
+                border-radius: 0 0 6px 6px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      }
+
+      /* Page header tweaks */
+      .page-header {
+        background-color: #f5f5f5;
+        padding: 20px 20px 10px;
+        margin: -20px -20px 20px;
+      }
+
+      /* Styles you shouldn't keep as they are for displaying this base example only */
+      .content .span10,
+      .content .span4 {
+        min-height: 500px;
+      }
+
+      .topbar .btn {
+        border: 0;
+      }
+
+    </style>
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-buttons.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+          <h1>Tea timer <small>Stačí jen zalít...</small></h1>
+        </div>
+        <div class="row">
+          <div class="span10">
+            <form id="form1">
+              <div class="clearfix">   
+                <label id="optionsTime">Jaký čaj budeme vařit?</label>
+                <div class="input">          
+                  <fieldset>
+                    <label>
+                      <input type="radio" name="time" value="1" checked>
+                      <span>Černý čaj</span>
+                    </label>
+                    <label>
+                      <input type="radio" name="time" value="2">
+                      <span>Zelený čaj</span>
+                    </label>
+                    <label>
+                      <input type="radio" name="time" value="3">
+                      <span>Vovocnej čaj</span>
+                    </label>
+
+                  </fieldset>
+                </div>
+              </div>
+              <div class="actions">
+                <button id="btn-run" data-loading-text="xxx" class="btn primary">Spusť</button>
+                <script>
+                  $(function() {
+                      var btn = $('#btn-run').click(function () {
+                      btn.button('loading')
+                      var time = $('input:radio[name=time]:checked').val()
+                      console.log("Setting timer for: " + time)
+                      startTimer(time, btn)
+                    })
+                  });
+                </script>
+                <button class="btn">I feel lucky</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; Krtek</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
