@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Teatimer</title>
+    <title>Tea-clock</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -13,8 +13,17 @@
 
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
+	<style type="text/css">
+		table td {
+			vertical-align: bottom;
+		}
+	</style>
+
+
     <script type="text/javascript" src="js/timer.js"></script>
   </head>
-<body onload="ding();">
-<h2>Hotovo</h2>
+<body onload="ding('snd/alarm.mp3');">
+	<table>
+	<tr><td><img src="img/icon.png" width="64"/></td><td><h1>Čaj je hotový!</h1></td>
+	</table>
 </body>

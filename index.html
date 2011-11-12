@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Teatimer</title>
+    <title>Tea-clock</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -13,6 +13,7 @@
 
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
     <style type="text/css">
       /* Override some defaults */
       html, body {
@@ -28,11 +29,15 @@
         width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
       }
 
+	  .well {
+          height: 360px;
+       }
+
       /* The white background content wrapper */
       .content {
         background-color: #fff;
         padding: 20px;
-        margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+
         -webkit-border-radius: 0 0 6px 6px;
            -moz-border-radius: 0 0 6px 6px;
                 border-radius: 0 0 6px 6px;
@@ -48,16 +53,6 @@
         margin: -20px -20px 20px;
       }
 
-      /* Styles you shouldn't keep as they are for displaying this base example only */
-      .content .span10,
-      .content .span4 {
-        min-height: 500px;
-      }
-
-      .topbar .btn {
-        border: 0;
-      }
-
     </style>
 
     <!-- Le fav and touch icons -->
@@ -65,58 +60,116 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+		
+	<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>    
     <script type="text/javascript" src="js/timer.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-buttons.js"></script>
+    <script type="text/javascript" src="js/bootstrap-twipsy.js"></script>
+    <script type="text/javascript" src="js/bootstrap-popover.js"></script>
+	<script>
+  		$(document).ready(function() {
+			createRadios();
+    		$("#slider").slider({min:1, max: 359});
+			$('input:radio[name=time]').click(function() {
+				var name = $('input:radio[name=time]:checked').val();
+				var tea = getTea(name);
+				updateInfoPanel(tea)
+				$('#slider').slider("option", "value", tea.time);
+			});
+			$( "#slider" ).slider({
+   				slide: function(event, ui) {
+					onSliderChange(event, ui);
+				},
+   				change: function(event, ui) {
+					onSliderChange(event, ui);
+				}			
+			});
+			$('input:radio[name=time]:checked').click();
+  		});
+
+		function enable() {
+			enableGroup($('input:radio[name=time]'));
+		    $("#slider").slider("enable");
+			var time = $("#slider").slider("option", "value");			
+			$('#teaTime').html(formatMillis(time * 1000));
+		}
+  	</script>
+	<script>
+    $(function () {
+    	$("a[rel=popover]").popover({
+                  offset: 10
+                }).click(function(e) {
+                  e.preventDefault()
+                })
+            })
+     </script>
+
+
   </head>
 
   <body>
-
-    <div class="container">
+    <div class="container">                    
 
       <div class="content">
         <div class="page-header">
-          <h1>Tea timer <small>Stačí jen zalít...</small></h1>
+          <h1>Tea-clock <small>Stačí jen zalít...</small></h1>
         </div>
         <div class="row">
-          <div class="span10">
-            <form id="form1">
-              <div class="clearfix">   
-                <label id="optionsTime">Jaký čaj budeme vařit?</label>
-                <div class="input">          
-                  <fieldset>
-                    <label>
-                      <input type="radio" name="time" value="1" checked>
-                      <span>Černý čaj</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="time" value="2">
-                      <span>Zelený čaj</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="time" value="3">
-                      <span>Vovocnej čaj</span>
-                    </label>
-
-                  </fieldset>
-                </div>
-              </div>
-              <div class="actions">
-                <button id="btn-run" data-loading-text="xxx" class="btn primary">Spusť</button>
-                <script>
-                  $(function() {
-                      var btn = $('#btn-run').click(function () {
-                      btn.button('loading')
-                      var time = $('input:radio[name=time]:checked').val()
-                      console.log("Setting timer for: " + time)
-                      startTimer(time, btn)
-                    })
-                  });
-                </script>
-                <button class="btn">I feel lucky</button>
-              </div>
-            </form>
+          <div class="span8">
+			<div class="well">
+	            <form id="form1">
+					<fieldset>
+		              	<div class="clearfix">   
+	                		<label id="optionsTime">Druh čaje:</label>
+	                		<div class="input">          
+	                  			<ul class="inputs-list" id="radios"></ul>
+	                		</div>
+	
+						</div>
+		              	<div class="clearfix">   
+							<label id="exactTime">Úprava času:</label>
+							<div class="span3 input" id="slider"></div>
+						</div>
+	              	</fieldset>
+					
+	              <div class="actions">
+	                <button id="btn-run" data-loading-text="Louhuju" class="btn danger large">Louhuj</button>&nbsp;
+	                <script>
+	                  $(function() {
+	                      var btn = $('#btn-run').click(function () {                      					  
+	                      var time =  $( "#slider" ).slider( "option", "value" );
+	                      console.log("Setting timer for: " + time);
+						  btn.button('loading');
+	                      startTimer(time, $('#teaTime'));
+						  disableGroup($('input:radio[name=time]'));
+						  $("#slider").slider("disable");
+	                    })
+	                  });
+	                </script>
+	                <button class="btn primary large">Reset</button>
+	              </div>
+	            </form>
+			</div>
           </div>
+		  <div class="span4">
+			<div class="well">
+				<div class="clearfix">
+					<img src="img/icon_pruhledna.png"><br/><br/>
+				</div>
+				<div class="clearfix">
+					<a href="#" class="btn default large" id="teaName"></a><br/><br/>
+				</div>
+				<div class="clearfix">
+					<a href="#" class="btn default large" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
+				</div>
+				<div class="clearfix">
+					<a href="#" class="btn default large" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
+				</div>
+				
+			</div>
+		  </div>	
+
         </div>
       </div>
 
