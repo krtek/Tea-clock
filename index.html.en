@@ -68,6 +68,15 @@
             })
      </script>
 
+     <!-- Place this render call where appropriate -->
+	<script type="text/javascript">
+  	(function() {
+    		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    		po.src = 'https://apis.google.com/js/plusone.js';
+    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+
 
   </head>
 
@@ -114,9 +123,10 @@
 	                    })
 	                  });
 	                </script>
-	                <button class="btn primary large">Reset</button>
+	                <button class="btn primary large">Reset</button>	                
 	              </div>
 	            </form>
+	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 			</div>
           </div>
 		  <div class="span4">
@@ -142,6 +152,7 @@
 
       <footer>
         <p>&copy; lukas.marek (at) gmail.com, 2011</p>
+
 	  	<script type="text/javascript">
 
 			  var _gaq = _gaq || [];

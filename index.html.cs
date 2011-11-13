@@ -68,6 +68,17 @@
             })
      </script>
 
+<!-- Place this render call where appropriate -->
+	<script type="text/javascript">
+	window.___gcfg = {lang: 'cs'};
+	
+  	(function() {
+    		var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    		po.src = 'https://apis.google.com/js/plusone.js';
+    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script>
+
 
   </head>
 
@@ -76,7 +87,7 @@
 
       <div class="content">
         <div class="page-header">
-          <h1>Tea-clock <small>Stačí jen zalít...</small></h1>
+          <h1>Tea-clock <small>Ať se louhuje...</small></h1>
         </div>
         <div class="row">
           <div class="span8">
@@ -117,6 +128,7 @@
 	                <button class="btn primary large">Reset</button>
 	              </div>
 	            </form>
+	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 			</div>
           </div>
 		  <div class="span4">
@@ -141,7 +153,7 @@
       </div>
 
       <footer>
-        <p>&copy; Krtek</p>
+           <p>&copy; lukas.marek (at) gmail.com, 2011</p>
       </footer>
 
     </div> <!-- /container -->
