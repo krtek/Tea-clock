@@ -24,6 +24,6 @@
   </head>
 <body onload="ding('snd/alarm.mp3');">
 	<table>
-	<tr><td><img src="img/icon.png" width="64"/></td><td><h1>Čaj je hotový!</h1></td>
+	<tr><td><img src="img/icon.png" width="64"/></td><td><h2>Čaj je hotový!</h2></td>
 	</table>
 </body>
