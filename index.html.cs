@@ -14,46 +14,7 @@
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-    <style type="text/css">
-      /* Override some defaults */
-      html, body {
-        background-color: #eee;
-      }
-      body {
-        padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
-      }
-      .container > footer p {
-        text-align: center; /* center align it with the container */
-      }
-      .container {
-        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-      }
-
-	  .well {
-          height: 360px;
-       }
-
-      /* The white background content wrapper */
-      .content {
-        background-color: #fff;
-        padding: 20px;
-
-        -webkit-border-radius: 0 0 6px 6px;
-           -moz-border-radius: 0 0 6px 6px;
-                border-radius: 0 0 6px 6px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-                box-shadow: 0 1px 2px rgba(0,0,0,.15);
-      }
-
-      /* Page header tweaks */
-      .page-header {
-        background-color: #f5f5f5;
-        padding: 20px 20px 10px;
-        margin: -20px -20px 20px;
-      }
-
-    </style>
+	<link href="css/override.css" rel="stylesheet"/>	
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
@@ -62,8 +23,10 @@
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
 		
 	<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>    
+	<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+    
     <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/teas_cs.js"></script>
     <script type="text/javascript" src="js/bootstrap-buttons.js"></script>
     <script type="text/javascript" src="js/bootstrap-twipsy.js"></script>
     <script type="text/javascript" src="js/bootstrap-popover.js"></script>
@@ -137,7 +100,11 @@
 	                <button id="btn-run" data-loading-text="Louhuju" class="btn danger large">Louhuj</button>&nbsp;
 	                <script>
 	                  $(function() {
-	                      var btn = $('#btn-run').click(function () {                      					  
+	                      var btn = $('#btn-run').click(function () {           
+						  var permission = window.webkitNotifications.checkPermission();
+						  if (permission != 0) { 
+				    		window.webkitNotifications.requestPermission();
+						  }                     					             					  
 	                      var time =  $( "#slider" ).slider( "option", "value" );
 	                      console.log("Setting timer for: " + time);
 						  btn.button('loading');

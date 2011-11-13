@@ -1,0 +1,20 @@
+{
+  "name": "Tea clock",
+  "description": "Your perfect cup of tea.",
+  "version": "1",
+  "app": {
+    "urls": [
+      "http://www.tea-clock.com/",
+      "http://tea-clock.com/"
+    ],
+    "launch": {
+      "web_url": "http://www.tea-clock.com/"
+    }
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "permissions": [
+    "notifications"
+  ]
+}
