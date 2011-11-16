@@ -1,7 +1,7 @@
 # Tea-clock
 Steep your tea right.
 ## Intro
-Application is running on [website](tea-clock.com) and as a Chrome Web Store [application](https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp?utm_source=chrome-ntp-icon).
+Application is running on [website](http://tea-clock.com) and as a Chrome Web Store [application](https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp?utm_source=chrome-ntp-icon).
 
 ## How to
 1. Install [coffee script](http://jashkenas.github.com/coffee-script/)
