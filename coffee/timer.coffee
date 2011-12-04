@@ -25,7 +25,7 @@ window.createRadios = () ->
 
 window.startTimer = (seconds, btn) ->   
 	window.btn = btn
-	permission = window.webkitNotifications.checkPermission()
+	permission = window.webkitNotifications.checkPermission() 
 	time = 1000 * seconds
 	total_time = time
 	console.log("Setting timeout for #{time}")  
@@ -138,6 +138,12 @@ $(document).ready ->
 		onSliderChange(event, ui))
 	$( "#slider" ).slider(change: (event, ui) ->
 		onSliderChange(event, ui))
+	
+	#check webkit notification
+	if (!window.webkitNotifications)
+		$(".alert-message").show()
+		$('#btn-run').toggleClass('disabled')
 		
-	$('input:radio[name=time]:checked').click();
+	$('input:radio[name=time]:checked').click()
+	
 

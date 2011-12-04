@@ -50,6 +50,13 @@
         <div class="page-header">
           <h1>Tea-clock <small>Let it steep...</small></h1>
         </div>
+		<div class="row">
+			<div class="span12">
+				<div class="alert-message error" hidden="true">
+				  <p><strong>Chrome required!</strong><br/>This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google Chrome.</strong> only.</p>
+				</div>
+			</div>
+		</div>
         <div class="row">
           <div class="span8">
 			<div class="well">

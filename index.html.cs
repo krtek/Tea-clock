@@ -52,6 +52,13 @@
         <div class="page-header">
           <h1>Tea-clock <small>Ať se louhuje...</small></h1>
         </div>
+		<div class="row">
+			<div class="span12">
+				<div class="alert-message error" hidden="true">
+				  <p><strong>Je vyžadován Chrome!</strong><br/>Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v <strong>Google Chrome.</strong></p>
+				</div>
+			</div>
+		</div>
         <div class="row">
           <div class="span8">
 			<div class="well">
