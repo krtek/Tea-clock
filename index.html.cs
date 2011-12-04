@@ -30,43 +30,6 @@
     <script type="text/javascript" src="js/bootstrap-buttons.js"></script>
     <script type="text/javascript" src="js/bootstrap-twipsy.js"></script>
     <script type="text/javascript" src="js/bootstrap-popover.js"></script>
-	<script>
-  		$(document).ready(function() {
-			createRadios();
-    		$("#slider").slider({min:1, max: 359});
-			$('input:radio[name=time]').click(function() {
-				var name = $('input:radio[name=time]:checked').val();
-				var tea = getTea(name);
-				updateInfoPanel(tea)
-				$('#slider').slider("option", "value", tea.time);
-			});
-			$( "#slider" ).slider({
-   				slide: function(event, ui) {
-					onSliderChange(event, ui);
-				},
-   				change: function(event, ui) {
-					onSliderChange(event, ui);
-				}			
-			});
-			$('input:radio[name=time]:checked').click();
-  		});
-
-		function enable() {
-			enableGroup($('input:radio[name=time]'));
-		    $("#slider").slider("enable");
-			var time = $("#slider").slider("option", "value");			
-			$('#teaTime').html(formatMillis(time * 1000));
-		}
-  	</script>
-	<script>
-    $(function () {
-    	$("a[rel=popover]").popover({
-                  offset: 10
-                }).click(function(e) {
-                  e.preventDefault()
-                })
-            })
-     </script>
 
 <!-- Place this render call where appropriate -->
 	<script type="text/javascript">
@@ -109,22 +72,6 @@
 					
 	              <div class="actions">
 	                <button id="btn-run" data-loading-text="Louhuju" class="btn danger large">Louhuj</button>&nbsp;
-	                <script>
-	                  $(function() {
-	                      var btn = $('#btn-run').click(function () {           
-						  var permission = window.webkitNotifications.checkPermission();
-						  if (permission != 0) { 
-				    		window.webkitNotifications.requestPermission();
-						  }                     					             					  
-	                      var time =  $( "#slider" ).slider( "option", "value" );
-	                      console.log("Setting timer for: " + time);
-						  btn.button('loading');
-	                      startTimer(time, $('#teaTime'));
-						  disableGroup($('input:radio[name=time]'));
-						  $("#slider").slider("disable");
-	                    })
-	                  });
-	                </script>
 	                <button class="btn primary large">Reset</button>
 	              </div>
 	            </form>
