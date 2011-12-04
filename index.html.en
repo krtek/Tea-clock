@@ -53,7 +53,7 @@
 		<div class="row">
 			<div class="span12">
 				<div class="alert-message error" hidden="true">
-				  <p><strong>Chrome required!</strong><br/>This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google Chrome.</strong> only.</p>
+				  <p><strong>Chrome required!</strong><br/>This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google Chrome</strong> only.</p>
 				</div>
 			</div>
 		</div>
