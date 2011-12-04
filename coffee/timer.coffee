@@ -1,15 +1,26 @@
 SOUND = true
 CANCEL_TIMEOUT = 10000
+CHOSEN_TEA = "chosen_tea"
 total_time = 0
 
 window.getTea = (name) -> 
 	for tea in teas
 		if (tea.name == name)
-			return tea		
+			return tea
+
+window.storeTea = (tea) ->
+	localStorage[CHOSEN_TEA] = tea.name
 
 window.createRadios = () ->
+	stored_tea = localStorage[CHOSEN_TEA]
 	for tea in teas
 		$("<li><label><input type='radio' name='time' value='#{tea.name}'><span> #{tea.title} </span></label></li>").appendTo($('#radios'))
+		
+	if stored_tea
+		for radio in $('input:radio[name=time]')
+			if radio.value == stored_tea
+				radio.checked = true
+	else 
 		$('input:radio[name=time]')[0].checked = true
 
 window.startTimer = (seconds, btn) ->   
@@ -118,6 +129,7 @@ $(document).ready ->
 	$('input:radio[name=time]').click ->
 		name = $('input:radio[name=time]:checked').val();
 		tea = getTea(name)
+		storeTea(tea)
 		updateInfoPanel(tea)
 		$('#slider').slider("option", "value", tea.time);
 
