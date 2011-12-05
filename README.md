@@ -6,6 +6,6 @@ Application is running on [website](http://tea-clock.com) and as a Chrome Web St
 ## How to
 1. Install [coffee script](http://jashkenas.github.com/coffee-script/)
 2. Compile *.cs into *.js 
-	coffee -o js -c coffee/
+	`coffee -o js -c coffee/`
 3. Deploy on apache server
 4. Enjoy!
