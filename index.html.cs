@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" manifest="tea-clock.appcache">
   <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
