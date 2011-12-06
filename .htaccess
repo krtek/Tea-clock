@@ -1,0 +1,2 @@
+#HTML5 offline manifest file
+AddType text/cache-manifest .appcache
