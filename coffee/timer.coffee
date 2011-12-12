@@ -111,7 +111,7 @@ $(document).ready ->
 	createRadios()
 	
 	#slider
-	$("#slider").slider({min:1, max: 359})
+	$("#slider").slider({min:1, max: 659})
 	
 	#run button function
 	$('#btn-run').click -> 
