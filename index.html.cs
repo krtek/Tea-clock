@@ -108,7 +108,7 @@
 
       <footer>
            <p>&copy; lukas.marek (at) gmail.com, 2011</p>
-           <p>Tip na vylepšení? Hurá na <a href="https://github.com/krtek/Tea-clock">Github!</a></p>
+           <p>Tip na vylepšení? Hurá na <a href="https://github.com/krtek/Tea-clock">Github</a>!</p>
 	  	<script type="text/javascript">
 
 			  var _gaq = _gaq || [];
