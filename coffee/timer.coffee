@@ -1,6 +1,7 @@
 SOUND = true
 CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
+CUSTOM_TIMER = "custom_timer"
 total_time = 0
 
 window.getTea = (name) -> 
@@ -119,6 +120,7 @@ $(document).ready ->
 		if (permission != 0) 
 			window.webkitNotifications.requestPermission()
 		time =  $("#slider").slider( "option", "value" )
+		localStorage[CUSTOM_TIMER] = time
 		console.log("Setting timer for: " + time)
 		$('#btn-run').button('loading');
 		startTimer(time, $('#teaTime'))
@@ -145,5 +147,7 @@ $(document).ready ->
 		$('#btn-run').toggleClass('disabled')
 		
 	$('input:radio[name=time]:checked').click()
+	if localStorage[CUSTOM_TIMER] 
+		$("#slider").slider("option", "value", localStorage[CUSTOM_TIMER])
 	
 
