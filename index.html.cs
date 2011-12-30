@@ -60,7 +60,7 @@
 			</div>
 		</div>
         <div class="row">
-          <div class="span8">
+          <div class="span9">
 			<div class="well">
 	            <form id="form1">
 					<fieldset>
@@ -85,7 +85,7 @@
 	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 			</div>
           </div>
-		  <div class="span4">
+		  <div class="span4" style="text-align:center">
 			<div class="well">
 				<div class="clearfix">
 					<img src="img/icon_pruhledna.png"><br/><br/>
@@ -108,7 +108,6 @@
 
       <footer>
            <p>&copy; lukas.marek (at) gmail.com, 2011</p>
-           <p>Tip na vylepšení? Hurá na <a href="https://github.com/krtek/Tea-clock">Github</a>!</p>
 	  	<script type="text/javascript">
 
 			  var _gaq = _gaq || [];
@@ -123,6 +122,13 @@
 
 		</script>
       </footer>
+
+<a href="https://github.com/krtek/Tea-clock">
+	<img style="position: absolute; z-index: 5; top: 0; right: 0; border: 0;"
+		 src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+		 alt="Fork me on GitHub" />
+</a>
+
 
     </div> <!-- /container -->
 
