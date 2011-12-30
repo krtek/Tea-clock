@@ -91,13 +91,13 @@
 					<img src="img/icon_pruhledna.png"><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" id="teaName"></a><br/><br/>
+					<a href="#" class="btn default large" style="width:60px" id="teaName"></a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
+					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
+					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
 				</div>
 				
 			</div>
