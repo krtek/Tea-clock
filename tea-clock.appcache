@@ -1,8 +1,13 @@
 CACHE MANIFEST
 
-# Version 10
+CACHE:
+=======
+# Version 22
 
 CACHE:
+#HTML
+popup.html
+
 # images
 img/icon_pruhledna.png
 img/icon.png

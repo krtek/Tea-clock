@@ -17,10 +17,8 @@
 	<link href="css/override.css" rel="stylesheet"/>	
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/favicon.ico">
 		
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -60,7 +58,7 @@
 			</div>
 		</div>
         <div class="row">
-          <div class="span8">
+          <div class="span9">
 			<div class="well">
 	            <form id="form1">
 					<fieldset>
@@ -85,19 +83,19 @@
 	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 			</div>
           </div>
-		  <div class="span4">
+		  <div class="span4" style="text-align:center">
 			<div class="well">
 				<div class="clearfix">
 					<img src="img/icon_pruhledna.png"><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" id="teaName"></a><br/><br/>
+					<a href="#" class="btn default large" style="width:60px" id="teaName"></a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
+					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
+					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
 				</div>
 				
 			</div>
@@ -122,6 +120,13 @@
 
 		</script>
       </footer>
+
+<a href="https://github.com/krtek/Tea-clock">
+	<img style="position: absolute; z-index: 5; top: 0; right: 0; border: 0;"
+		 src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+		 alt="Fork me on GitHub" />
+</a>
+
 
     </div> <!-- /container -->
 
