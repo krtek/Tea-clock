@@ -22,7 +22,7 @@
 
     <script type="text/javascript" src="js/timer.js"></script>
   </head>
-<body onload="ding('snd/alarm.mp3');">
+<body>
 	<table>
 	<tr><td><img src="img/icon.png" width="64"/></td><td><h2>Tea is ready!</h2></td>
 	</table>
