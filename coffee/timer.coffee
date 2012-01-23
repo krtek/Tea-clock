@@ -58,7 +58,8 @@ window.onTimeout = () ->
 	permission = window.webkitNotifications.checkPermission()
 	console.log("Permission: #{permission}")
 	if (permission == 0) 
-		displayNotification()	
+		displayNotification()
+		ding('snd/alarm.mp3')	
 	else 
 		console.log("Průšvih - nemám permission!")	
 	$('#btn-run').button('reset')
@@ -95,6 +96,14 @@ window.ding = (mp3) ->
 	snd = new Audio(mp3)
 	if SOUND 
 		snd.play()
+		
+		###
+		stop playing alert sound when notification popup is closed 
+		(synchronized with notification popup through CANCEL_TIMEOUT
+		constant which is same in both cases)		 
+		###
+		pauseAudio = -> snd.pause()
+		setTimeout(pauseAudio, CANCEL_TIMEOUT) 
 		
 window.enable = () ->
 	enableGroup($('input:radio[name=time]'));
