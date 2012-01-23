@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
   <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
@@ -22,7 +22,7 @@
 
     <script type="text/javascript" src="js/timer.js"></script>
   </head>
-<body onload="ding('snd/alarm.mp3');">
+<body>
 	<table>
 	<tr><td><img src="img/icon.png" width="64"/></td><td><h2>Čaj je hotový!</h2></td>
 	</table>
