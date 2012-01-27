@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 25
+# Version 26
 
 CACHE:
 #HTML
@@ -9,6 +9,7 @@ popup.html
 # images
 img/icon_pruhledna.png
 img/icon.png
+http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png
 
 # styles
 css/override.css
