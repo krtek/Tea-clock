@@ -58,8 +58,7 @@ window.onTimeout = () ->
 	permission = window.webkitNotifications.checkPermission()
 	console.log("Permission: #{permission}")
 	if (permission == 0) 
-		displayNotification()
-		ding('snd/alarm.mp3')	
+		displayNotification()		
 	else 
 		console.log("Průšvih - nemám permission!")	
 	$('#btn-run').button('reset')
@@ -75,6 +74,7 @@ window.displayNotification = () ->
 	permission = window.webkitNotifications.checkPermission()
 	console.log("Permission: #{permission}")
 	window.popup = window.webkitNotifications.createHTMLNotification("popup.html")
+	ding('snd/alarm.mp3', window.popup)		
 	popup.show()
 	setTimeout("popup.cancel()", CANCEL_TIMEOUT)
 
@@ -92,17 +92,17 @@ window.updateInfoPanel = (tea) ->
 	$('#teaTemp').button().html(tea.temp)
 
 
-window.ding = (mp3) -> 
+window.ding = (mp3, popup) -> 
 	snd = new Audio(mp3)
 	if SOUND 
 		snd.play()
-		
 		###
 		stop playing alert sound when notification popup is closed 
 		(synchronized with notification popup through CANCEL_TIMEOUT
 		constant which is same in both cases)		 
 		###
 		pauseAudio = -> snd.pause()
+		popup.onclose = pauseAudio
 		setTimeout(pauseAudio, CANCEL_TIMEOUT) 
 		
 window.enable = () ->
