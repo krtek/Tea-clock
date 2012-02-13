@@ -1,7 +1,7 @@
 {
   "name": "Tea clock",
   "description": "Your perfect cup of tea.",
-  "version": "3",
+  "version": "5",
   "app": {
     "urls": [
       "http://www.tea-clock.com/",
