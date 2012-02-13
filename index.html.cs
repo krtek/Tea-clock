@@ -80,6 +80,7 @@
 	                <button class="btn primary large">Reset</button>
 	              </div>
 	            </form>
+	          	<p><span class="label important">Líbí se aplikace?</span>&nbsp;Dej jí <strong>+1</strong> a pomoz mi vyhrát <a href="http://www.google.cz/events/mampadla/">soutěž</a>!</p>
 	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 			</div>
           </div>

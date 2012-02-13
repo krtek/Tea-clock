@@ -78,7 +78,8 @@
 	                <button class="btn primary large">Reset</button>	                
 	              </div>
 	            </form>
-	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
+	            <p><span class="label important">Like the app?</span>&nbsp;Give it <strong>+1</strong> and help me win the <a href="http://www.google.cz/events/mampadla/">contest</a>!</p>
+	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone><br/></p>
 			</div>
           </div>
 		  <div class="span4" style="text-align:center">
