@@ -16,7 +16,7 @@ window.storeTea = (tea) ->
 window.createRadios = () ->
 	stored_tea = localStorage[CHOSEN_TEA]
 	for tea in teas
-		$("<li><label><input type='radio' name='time' value='#{tea.name}'><span> #{tea.title} </span></label></li>").appendTo($('#radios'))
+		$("<label class='radio'><input type='radio' name='time' value='#{tea.name}'>#{tea.title}</label>").appendTo($('#radios'))
 		
 	if stored_tea
 		for radio in $('input:radio[name=time]')

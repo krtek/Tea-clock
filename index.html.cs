@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs" manifest="tea-clock.appcache">   
+<html lang="cs" manifest="tea-clock.appcache">
 <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
@@ -55,17 +55,16 @@
 					<fieldset>
 						<legend>Jak pijete svůj čaj?</legend>
 							<div class="control-group">							
-								<label for="radios">Druh čaje:</label>								
-	                			<div class="controls">          
-	                  				<ul class="unstyled" id="radios"></ul>
+								<label class="control-label">Druh čaje:</label>								
+	                			<div class="controls" id="radios">          
 	                			</div>
 	                		</div>
 		              		<div class="control-group">
-								<label for="slider">Úprava času:</label>
-									<div class="controls">
-										<div class="span4" id="slider"></div>
-									</div>
-								</div>						
+								<label class="control-label" for="slider">Úprava času:</label>
+								<div class="controls">
+									<div class="span4" id="slider"></div>
+								</div>
+							</div>						
 	              	</fieldset>	              	
 	              		              						
 	              <div class="form-actions">

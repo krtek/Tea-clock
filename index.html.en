@@ -55,13 +55,12 @@
 					<fieldset>
 						<legend>How do you take your tea?</legend>
 							<div class="control-group">							
-								<label for="radios">Tea:</label>								
-	                			<div class="controls">          
-	                  				<ul class="unstyled" id="radios"></ul>
+								<label class="control-label">Tea:</label>								
+	                			<div class="controls" id="radios">          
 	                			</div>
 	                		</div>
 		              		<div class="control-group">
-								<label for="slider">Time:</label>
+								<label class="control-label" for="slider">Time:</label>
 									<div class="controls">
 										<div class="span4" id="slider"></div>
 									</div>
