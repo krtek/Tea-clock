@@ -10,8 +10,13 @@ popup.html
 img/icon_pruhledna.png
 img/icon.png
 http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png
+img/glyphicons-halflings-white.png
+img/glyphicons-halflings.png
+
 
 # styles
+css/bootstrap-responsive.min.css
+css/bootstrap.min.css
 css/override.css
 css/ui-lightness/jquery-ui-1.8.16.custom.css
 css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png
@@ -31,11 +36,12 @@ css/ui-lightness/images/ui-icons_ffffff_256x240.png
 
 # scripts
 js/timer.js
-js/bootstrap-twipsy.js
-js/bootstrap-popover.js
-js/bootstrap-buttons.js
 js/teas_en.js
 js/teas_cs.js
+js/bootstrap-tooltip.js
+js/bootstrap-popover.js
+js/bootstrap-button.js
+js/bootstrap.min.js
 
 # sound
 snd/alarm.mp3
@@ -44,8 +50,6 @@ snd/alarm.mp3
 http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js
 http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
 
-# bootstrap
-http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css
 
 # everything else is served from internet
 NETWORK:

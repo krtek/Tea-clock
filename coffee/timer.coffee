@@ -3,6 +3,7 @@ CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 total_time = 0
+timer_running = false
 
 window.getTea = (name) -> 
 	for tea in teas
@@ -30,7 +31,7 @@ window.startTimer = (seconds, btn) ->
 	time = 1000 * seconds
 	total_time = time
 	console.log("Setting timeout for #{time}")  
-	#setTimeout("onTimeout()", time)
+	timer_running = true
 	setTimeout("onTick()", 1000)
 	if (permission != 0) 
 		window.webkitNotifications.requestPermission(startTimer(minutes))
@@ -38,11 +39,12 @@ window.startTimer = (seconds, btn) ->
 
 window.onTick = () -> 
 	total_time = total_time - 1000  
-	window.btn.html(formatMillis(total_time))
-	if total_time >= 0
-    	setTimeout("onTick()", 1000)
-	else
-		setTimeout("onTimeout()", 0)
+	if (timer_running)
+		window.btn.html(formatMillis(total_time))
+		if total_time >= 0
+    		setTimeout("onTick()", 1000)
+		else
+			setTimeout("onTimeout()", 0)
 
 
 window.formatMillis = (millis) -> 
@@ -61,7 +63,6 @@ window.onTimeout = () ->
 		displayNotification()		
 	else 
 		console.log("Průšvih - nemám permission!")	
-	$('#btn-run').button('reset')
 	enable()
 
 
@@ -106,10 +107,12 @@ window.ding = (mp3, popup) ->
 		setTimeout(pauseAudio, CANCEL_TIMEOUT) 
 		
 window.enable = () ->
+	$('#btn-run').button('reset')
 	enableGroup($('input:radio[name=time]'));
 	$("#slider").slider("enable");
 	time = $("#slider").slider("option", "value")
 	$('#teaTime').html(formatMillis(time * 1000))
+	$('#btn-reset').attr("disabled", "true")
 
 
 #Initialization code
@@ -135,6 +138,12 @@ $(document).ready ->
 		startTimer(time, $('#teaTime'))
 		disableGroup($('input:radio[name=time]'))
 		$("#slider").slider("disable")
+		$('#btn-reset').removeAttr("disabled")
+		
+	#reset button function
+	$('#btn-reset').click ->
+		window.enable()
+		timer_running = false
 	
 	#radio button functions
 	$('input:radio[name=time]').click ->
@@ -152,7 +161,7 @@ $(document).ready ->
 	
 	#check webkit notification
 	if (!window.webkitNotifications)
-		$(".alert-message").show()
+		$(".alert").show()
 		$('#btn-run').toggleClass('disabled')
 		
 	$('input:radio[name=time]:checked').click()

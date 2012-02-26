@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="cs" manifest="tea-clock.appcache">
-  <head>
+<<html lang="cs" manifest="tea-clock.appcache">   
+<head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -12,23 +13,15 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-	<link href="css/override.css" rel="stylesheet"/>	
+	<link type="text/css" href="css/override.css" rel="stylesheet"/>
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="apple-touch-icon" href="img/favicon.ico">
 		
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-    
-    <script type="text/javascript" src="js/timer.js"></script>
-    <script type="text/javascript" src="js/teas_cs.js"></script>
-    <script type="text/javascript" src="js/bootstrap-buttons.js"></script>
-    <script type="text/javascript" src="js/bootstrap-twipsy.js"></script>
-    <script type="text/javascript" src="js/bootstrap-popover.js"></script>
-
 <!-- Place this render call where appropriate -->
 	<script type="text/javascript">
 	window.___gcfg = {lang: 'cs'};
@@ -45,68 +38,80 @@
 
   <body>
     <div class="container">                    
-
-      <div class="content">
-        <div class="page-header">
-          <h1>Tea-clock <small>Ať se louhuje...</small></h1>
-        </div>
+        <div class="page-header"> <h1>Tea-clock <small>Ať se louhuje...</small></h1> </div>
 		<div class="row">
-			<div class="span12">
-				<div class="alert-message error" hidden="true">
-				  <p><strong>Je vyžadován Chrome!</strong><br/>Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v <strong>Google Chrome.</strong></p>
+			<div class="span10">
+				<div class="alert alert-block alert-error" hidden="true">
+					<a class="close" data-dismiss="alert">×</a>
+					<h4 class="alert-heading">Je vyžadován Chrome!</h4>
+				  	Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v <strong>Google Chrome.</strong>
 				</div>
 			</div>
 		</div>
         <div class="row">
-          <div class="span9">
+          <div class="span7">
 			<div class="well">
-	            <form id="form1">
+	            <form id="form1" class="form-horizontal">
 					<fieldset>
-		              	<div class="clearfix">   
-	                		<label id="optionsTime">Druh čaje:</label>
-	                		<div class="input">          
-	                  			<ul class="inputs-list" id="radios"></ul>
+						<legend>Jak pijete svůj čaj?</legend>
+							<div class="control-group">							
+								<label for="radios">Druh čaje:</label>								
+	                			<div class="controls">          
+	                  				<ul class="unstyled" id="radios"></ul>
+	                			</div>
 	                		</div>
-	
-						</div>
-		              	<div class="clearfix">   
-							<label id="exactTime">Úprava času:</label>
-							<div class="span3 input" id="slider"></div>
-						</div>
-	              	</fieldset>
-					
-	              <div class="actions">
-	                <button id="btn-run" data-loading-text="Louhuju" class="btn danger large">Louhuj</button>&nbsp;
-	                <button class="btn primary large">Reset</button>
+		              		<div class="control-group">
+								<label for="slider">Úprava času:</label>
+									<div class="controls">
+										<div class="span4" id="slider"></div>
+									</div>
+								</div>						
+	              	</fieldset>	              	
+	              		              						
+	              <div class="form-actions">
+	                <button id="btn-run" data-loading-text="Louhuju" class="btn btn-danger btn-large" type="button">
+						<i class="icon-time icon-white"></i>
+						Louhuj
+					</button>&nbsp;
+	                <button id="btn-reset" class="btn btn-primary btn-large" type="button" disabled="true">
+						<i class="icon-repeat icon-white"></i>
+						Reset
+					</button>
 	              </div>
 	            </form>
-	          	<p><span class="label important">Líbí se aplikace?</span>&nbsp;Dej jí <strong>+1</strong> a pomoz mi vyhrát <a href="http://www.google.cz/events/mampadla/">soutěž</a>!</p>
-	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
-			</div>
+	            
+			</div>			
           </div>
-		  <div class="span4" style="text-align:center">
+          
+		  <div class="span3" style="text-align:center">
 			<div class="well">
 				<div class="clearfix">
 					<img src="img/icon_pruhledna.png"><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" style="width:60px" id="teaName"></a><br/><br/>
+					<a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName"></a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
+					<a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTime" data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
 				</div>
 				<div class="clearfix">
-					<a href="#" class="btn default large" style="width:60px" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
+					<a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTemp" data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
 				</div>
 				
 			</div>
-		  </div>	
-
-        </div>
-      </div>
+		  </div>
+		</div>
+		<div class="row">
+			<div class="span7">
+				<p><span class="label label-important">Líbí se aplikace?</span>&nbsp;Dej jí <strong>+1</strong> a pomoz mi vyhrát <a href="http://www.google.cz/events/mampadla/">soutěž</a>!</p>
+	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
+	          	
+			</div>
+		</div>	
+        
 
       <footer>
-           <p>&copy; lukas.marek (at) gmail.com, 2011</p>
+<!--           <p>&copy; lukas.marek (at) gmail.com, 2011</p> -->
 	  	<script type="text/javascript">
 
 			  var _gaq = _gaq || [];
@@ -130,6 +135,17 @@
 
 
     </div> <!-- /container -->
+    <!-- scripts -->
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    
+    <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/teas_cs.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-button.js"></script>
+    <script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
+    <script type="text/javascript" src="js/bootstrap-popover.js"></script>
 
   </body>
 </html>
