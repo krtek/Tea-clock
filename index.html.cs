@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="cs" manifest="tea-clock.appcache">
+<html lang="cs">
 <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
@@ -101,8 +102,7 @@
 		  </div>
 		</div>
 		<div class="row">
-			<div class="span7">
-				<p><span class="label label-important">Líbí se aplikace?</span>&nbsp;Dej jí <strong>+1</strong> a pomoz mi vyhrát <a href="http://www.google.cz/events/mampadla/">soutěž</a>!</p>
+			<div class="span7">				
 	            <p><g:plusone annotation="inline" href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone></p>
 	          	
 			</div>
