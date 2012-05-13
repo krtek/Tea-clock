@@ -12,7 +12,8 @@
     <![endif]-->
 
     <!-- Le styles -->
-	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	  <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<style type="text/css">
 		table td {
 			vertical-align: middle;
