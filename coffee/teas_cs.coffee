@@ -5,3 +5,5 @@ window.teas = [	{ name: "white", title: "Bílý čaj", temp: "65-70 °C", time: 
 				{ name: "black", title: "Černý čaj", temp: "99 °C", time: 150 }, 
 				{ name: "herbal", title: "Bylinkový čaj", temp: "99 °C", time: 300},
 				{ name: "fruit", title: "Ovocný čaj", temp: "99 °C", time: 480} ]
+
+window.notificationTemplate = { title: "Tea clock", body: "Čaj je hotový!"}

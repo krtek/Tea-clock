@@ -74,7 +74,10 @@ window.onSliderChange = (evt, ui) ->
 window.displayNotification = () -> 
 	permission = window.webkitNotifications.checkPermission()
 	console.log("Permission: #{permission}")
-	window.popup = window.webkitNotifications.createHTMLNotification("popup.html")
+	window.popup = window.webkitNotifications.createNotification("img/icon.png", 
+		window.notificationTemplate.title, 
+		window.notificationTemplate.body)
+
 	ding('snd/alarm.mp3', window.popup)		
 	popup.show()
 	setTimeout("popup.cancel()", CANCEL_TIMEOUT)
@@ -104,6 +107,7 @@ window.ding = (mp3, popup) ->
 		###
 		pauseAudio = -> snd.pause()
 		popup.onclose = pauseAudio
+		popup.onclick = pauseAudio
 		setTimeout(pauseAudio, CANCEL_TIMEOUT) 
 		
 window.enable = () ->
