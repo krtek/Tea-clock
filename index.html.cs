@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="cs" manifest="tea-clock.appcache">
-<html lang="cs">
 <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
@@ -73,10 +72,6 @@
 						<i class="icon-time icon-white"></i>
 						Louhuj
 					</button>&nbsp;
-	                <button id="btn-reset" class="btn btn-primary btn-large" type="button" disabled="true">
-						<i class="icon-repeat icon-white"></i>
-						Reset
-					</button>
 	              </div>
 	            </form>
 	            
@@ -134,12 +129,31 @@
 
 
     </div> <!-- /container -->
+
+<!-- modal(s) -->
+	<div class="modal hide fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
+  <div class="modal-header">
+    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
+    <!--<h3 id="countdownLabel">Counting...</h3> -->
+  </div>
+  <div class="modal-body">
+  	<p><div style="text-align: center;"><h1 id="countdownTime">5:00</h1></div></p>
+    <p><div class="progress progress-striped active">
+  	<div class="bar" style="width: 100%;" id="countdownBar"></div>
+</div></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-large" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i class="icon-repeat icon-white"></i>
+    	Reset</button>    
+  </div>
+  </div>
+
     <!-- scripts -->
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
     
-    <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/timer2.js"></script>
     <script type="text/javascript" src="js/teas_cs.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-button.js"></script>

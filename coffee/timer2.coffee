@@ -3,6 +3,7 @@ CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 total_time = 0
+actual_time = 0
 timer_running = false
 
 window.getTea = (name) -> 
@@ -30,18 +31,26 @@ window.startTimer = (seconds, btn) ->
 	permission = window.webkitNotifications.checkPermission() 
 	time = 1000 * seconds
 	total_time = time
+	actual_time = time
 	console.log("Setting timeout for #{time}")  
 	timer_running = true
 	setTimeout("onTick()", 1000)
 	if (permission != 0) 
-		window.webkitNotifications.requestPermission(startTimer(minutes))
+		window.webkitNotifications.requestPermission(startTimer(minutes))		
+	$('#countdownModal').modal()
+	$('#countdownBar').css("width", "100%")
+	$('#countdownTime').html(formatMillis(actual_time))
+
 
 
 window.onTick = () -> 
-	total_time = total_time - 1000  
+	actual_time = actual_time - 1000  
 	if (timer_running)
-		window.btn.html(formatMillis(total_time))
-		if total_time >= 0
+		percentage = actual_time / (total_time / 100)
+		$('#countdownBar').css("width", percentage + "%")
+		$('#countdownTime').html(formatMillis(actual_time))
+
+		if actual_time >= 0
     		setTimeout("onTick()", 1000)
 		else
 			setTimeout("onTimeout()", 0)
@@ -60,7 +69,8 @@ window.onTimeout = () ->
 	permission = window.webkitNotifications.checkPermission()
 	console.log("Permission: #{permission}")
 	if (permission == 0) 
-		displayNotification()		
+		displayNotification()
+		$('#countdownModal').modal("hide")		
 	else 
 		console.log("Průšvih - nemám permission!")	
 	enable()
@@ -117,6 +127,8 @@ window.enable = () ->
 	time = $("#slider").slider("option", "value")
 	$('#teaTime').html(formatMillis(time * 1000))
 	$('#btn-reset').attr("disabled", "true")
+	timer_running = false
+	$('#countdownModal').modal("hide")
 
 
 #Initialization code
@@ -146,8 +158,7 @@ $(document).ready ->
 		
 	#reset button function
 	$('#btn-reset').click ->
-		window.enable()
-		timer_running = false
+		window.enable()					
 	
 	#radio button functions
 	$('input:radio[name=time]').click ->
@@ -171,5 +182,7 @@ $(document).ready ->
 	$('input:radio[name=time]:checked').click()
 	if localStorage[CUSTOM_TIMER] 
 		$("#slider").slider("option", "value", localStorage[CUSTOM_TIMER])
-	
 
+	$('#countdownModal').on(hidden: () ->
+		window.enable()
+	)

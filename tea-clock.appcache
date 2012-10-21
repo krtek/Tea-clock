@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 41
+# Version 42
 
 CACHE:
 #HTML
@@ -35,7 +35,7 @@ css/ui-lightness/images/ui-bg_glass_100_f6f6f6_1x400.png
 css/ui-lightness/images/ui-icons_ffffff_256x240.png
 
 # scripts
-js/timer.js
+js/timer2.js
 js/teas_en.js
 js/teas_cs.js
 js/bootstrap-tooltip.js
