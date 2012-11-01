@@ -155,6 +155,9 @@ $(document).ready ->
 		disableGroup($('input:radio[name=time]'))
 		$("#slider").slider("disable")
 		$('#btn-reset').removeAttr("disabled")
+		_gaq.push(['_trackEvent', 'start-time', time.toString()])
+		_gaq.push(['_trackEvent', 'start-tea', localStorage[CHOSEN_TEA]])		
+
 		
 	#reset button function
 	$('#btn-reset').click ->
