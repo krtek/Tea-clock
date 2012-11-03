@@ -36,7 +36,7 @@ window.startTimer = (seconds, btn) ->
 	timer_running = true
 	setTimeout("onTick()", 1000)
 	if (permission != 0) 
-		window.webkitNotifications.requestPermission(startTimer(minutes))		
+		window.webkitNotifications.requestPermission(startTimer(minutes))			
 	$('#countdownModal').modal()
 	$('#countdownBar').css("width", "100%")
 	$('#countdownTime').html(formatMillis(actual_time))
@@ -157,6 +157,7 @@ $(document).ready ->
 		$('#btn-reset').removeAttr("disabled")
 		_gaq.push(['_trackEvent', 'start-time', time.toString()])
 		_gaq.push(['_trackEvent', 'start-tea', localStorage[CHOSEN_TEA]])		
+		$('#countdownLabel').text(getTea(localStorage[CHOSEN_TEA]).title)
 
 		
 	#reset button function

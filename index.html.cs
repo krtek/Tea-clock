@@ -133,8 +133,8 @@
 <!-- modal(s) -->
 	<div class="modal hide fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
   <div class="modal-header">
-    <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> -->
-    <!--<h3 id="countdownLabel">Counting...</h3> -->
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="countdownLabel">&nbsp;</h3>
   </div>
   <div class="modal-body">
   	<p><div style="text-align: center;"><h1 id="countdownTime">5:00</h1></div></p>
