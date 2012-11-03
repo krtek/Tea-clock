@@ -13,8 +13,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
     <link type="text/css" href="css/override.css" rel="stylesheet"/>
 
@@ -98,11 +97,11 @@
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTime"
-                       data-content="Time to steep the tea." data-original-title="Čas">1:00</a><br/><br/>
+                       data-content="Time to steep the tea." data-original-title="Time">1:00</a><br/><br/>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTemp"
-                       data-content="Ideal temperature to steep the tea." data-original-title="Teplota">60C</a>
+                       data-content="Ideal temperature to steep the tea." data-original-title="Temperature">60C</a>
                 </div>
 
             </div>
@@ -176,10 +175,7 @@
 
 <script type="text/javascript" src="js/timer2.js"></script>
 <script type="text/javascript" src="js/teas_en.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-button.js"></script>
-<script type="text/javascript" src="js/bootstrap-tooltip.js"></script>
-<script type="text/javascript" src="js/bootstrap-popover.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
