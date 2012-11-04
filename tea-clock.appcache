@@ -1,10 +1,9 @@
 CACHE MANIFEST
 
-# Version 2.0.1 
+# Version 2.0.2
 
 CACHE:
 #HTML
-popup.html
 
 # images
 img/icon_pruhledna.png
@@ -15,8 +14,7 @@ img/glyphicons-halflings.png
 
 
 # styles
-css/bootstrap-responsive.min.css
-css/bootstrap.min.css
+http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css
 css/override.css
 css/ui-lightness/jquery-ui-1.8.16.custom.css
 css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png
@@ -38,18 +36,14 @@ css/ui-lightness/images/ui-icons_ffffff_256x240.png
 js/timer2.js
 js/teas_en.js
 js/teas_cs.js
-js/bootstrap-tooltip.js
-js/bootstrap-popover.js
-js/bootstrap-button.js
-js/bootstrap.min.js
+http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js
 
 # sound
 snd/alarm.mp3
 
 # jquery
-http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js
-http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js
-
+http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js
+http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js
 
 # everything else is served from internet
 NETWORK:
