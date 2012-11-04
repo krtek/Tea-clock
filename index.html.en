@@ -47,11 +47,20 @@
     </div>
     <div class="row">
         <div class="span10">
-            <div class="alert alert-block alert-error" hidden="hidden">
+            <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
                 <h4 class="alert-heading">Chrome required!</h4>
                 This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google
                 Chrome</strong> only.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span10">
+            <div class="alert alert-block alert-error" id="notification_disabled" hidden="hidden">
+                <a class="close" data-dismiss="alert">×</a>
+                <h4 class="alert-heading">Notifications required!</h4>
+                This application really needs <strong>desktop notifications</strong>, please enable it!
             </div>
         </div>
     </div>

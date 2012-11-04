@@ -47,7 +47,7 @@
     </div>
     <div class="row">
         <div class="span10">
-            <div class="alert alert-block alert-error" hidden="hidden">
+            <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
                 <h4 class="alert-heading">Je vyžadován Chrome!</h4>
                 Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v
@@ -55,6 +55,16 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="span10">
+            <div class="alert alert-block alert-error" id="notification_disabled" hidden="hidden">
+                <a class="close" data-dismiss="alert">×</a>
+                <h4 class="alert-heading">Jsou vyžadovány notifikace!</h4>
+                Tato aplikace opravdu potřebuje <strong>desktopové notifikace</strong>, povolte je, prosím!
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="span7">
             <div class="well">

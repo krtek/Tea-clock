@@ -26,17 +26,31 @@ window.createRadios = () ->
   else
     $('input:radio[name=time]')[0].checked = true
 
-window.startTimer = (seconds, btn) ->
-  window.btn = btn
+window.checkAndStartTimer = (seconds, btn) ->
   permission = window.webkitNotifications.checkPermission()
-  time = 1000 * seconds
-  total_time = time
-  actual_time = time
-  console.log("Setting timeout for #{time}")
+  window.btn = btn
+  total_time = 1000 * seconds
+  actual_time = 1000 * seconds
+
+  if (permission != 0)
+    window.webkitNotifications.requestPermission(_startTimer)
+    return
+  _startTimer()
+
+window._startTimer = () ->
+  if (window.webkitNotifications.checkPermission() != 0)
+    $("#notification_disabled").show()
+    return
+
+  $('#btn-run').button('loading')
+  disableGroup($('input:radio[name=time]'))
+  $("#slider").slider("disable")
+  $('#btn-reset').removeAttr("disabled")
+
+  console.log("Setting timeout for #{total_time}")
   timer_running = true
   setTimeout("onTick()", 1000)
-  if (permission != 0)
-    window.webkitNotifications.requestPermission(startTimer(minutes))
+  $('#countdownLabel').text(getTea(localStorage[CHOSEN_TEA]).title)
   $('#countdownModal').modal()
   $('#countdownBar').css("width", "100%")
   $('#countdownTime').html(formatMillis(actual_time))
@@ -145,20 +159,12 @@ $(document).ready ->
 
   #run button function
   $('#btn-run').click ->
-    permission = window.webkitNotifications.checkPermission()
-    if (permission != 0)
-      window.webkitNotifications.requestPermission()
     time =  $("#slider").slider("option", "value")
     localStorage[CUSTOM_TIMER] = time
     console.log("Setting timer for: " + time)
-    $('#btn-run').button('loading')
-    startTimer(time, $('#teaTime'))
-    disableGroup($('input:radio[name=time]'))
-    $("#slider").slider("disable")
-    $('#btn-reset').removeAttr("disabled")
+    checkAndStartTimer(time, $('#teaTime'))
     _gaq.push(['_trackEvent', 'start-time', time.toString()])
     _gaq.push(['_trackEvent', 'start-tea', localStorage[CHOSEN_TEA]])
-    $('#countdownLabel').text(getTea(localStorage[CHOSEN_TEA]).title)
 
   #reset button function
   $('#btn-reset').click ->
@@ -182,7 +188,7 @@ $(document).ready ->
 
   #check webkit notification
   if (!window.webkitNotifications)
-    $(".alert").show()
+    $("#notification_not_found").show()
     $('#btn-run').toggleClass('disabled')
 
   $('input:radio[name=time]:checked').click()
