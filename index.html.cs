@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="cs" manifest="tea-clock.appcache">
+<!--<html lang="cs" ng-app manifest="tea-clock.appcache">-->
+<html lang="cs" ng-app="tea">
 <head>
     <meta charset="utf-8">
     <title>Tea-clock</title>
@@ -23,7 +24,7 @@
 
     <!-- Place this render call where appropriate -->
     <script type="text/javascript">
-        window.___gcfg = {lang:'cs'};
+        window.___gcfg = {lang: 'cs'};
 
         (function () {
             var po = document.createElement('script');
@@ -38,7 +39,7 @@
 
 </head>
 
-<body>
+<body ng-controller="TimerController">
 <div class="container">
     <div class="page-header">
         <h1>Tea-clock
@@ -71,30 +72,29 @@
                 <form id="form1" class="form-horizontal">
                     <fieldset>
                         <legend>Jak pijete svůj čaj?</legend>
-                        <div class="control-group">
                             <label class="control-label">Druh čaje:</label>
 
-                            <div class="controls" id="radios">
+                            <div class="control-group">
+                                <div class="controls" ng-repeat="tea in teas">
+                                    <label class='radio'>
+                                        <input type='radio' ng-model='radio.index' value='{{$index}}'
+                                               ng-checked="tea.checked" ng-change='updateDisplay()'/>{{tea.title}}
+                                    </label>
+                                </div>
                             </div>
-                        </div>
                         <div class="control-group">
                             <label class="control-label" for="slider">Úprava času:</label>
-
                             <div class="controls">
-                                <div class="span4" id="slider"></div>
+                                <slider class="span4" id="slider"></slider>
                             </div>
                         </div>
                     </fieldset>
 
                     <div class="form-actions">
-                        <button id="btn-run" data-loading-text="Louhuju" class="btn btn-danger btn-large" type="button">
-                            <i class="icon-time icon-white"></i>
-                            Louhuj
-                        </button>
-                        &nbsp;
+                        <button class="btn btn-danger btn-large" type="button" ng-click="start()">
+                            <i class="icon-time icon-white"></i>Louhuj</button>&nbsp;
                     </div>
                 </form>
-
             </div>
         </div>
 
@@ -104,17 +104,16 @@
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName"></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName">{{displayName}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTime"
-                       data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">1:00</a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover"
+                       data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">{{displayTime|time}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover" id="teaTemp"
-                       data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">60C</a>
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover"
+                       data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">{{displayTemp}}</a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -163,16 +162,16 @@
 <div class="modal hide fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="countdownLabel">&nbsp;</h3>
+        <h3>{{displayName}}</h3>
     </div>
     <div class="modal-body">
-        <div style="text-align: center;"><h1 id="countdownTime">5:00</h1></div>
+        <div style="text-align: center;"><h1>{{actualTime|time}}</h1></div>
         <div class="progress progress-striped active">
             <div class="bar" style="width: 100%;" id="countdownBar"></div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary btn-large" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i
+        <button class="btn btn-primary btn-large" ng-click="timer = false" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i
                 class="icon-repeat icon-white"></i>
             Reset
         </button>
@@ -183,9 +182,12 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
 
-<script type="text/javascript" src="js/timer2.js"></script>
 <script type="text/javascript" src="js/teas_cs.js"></script>
+<script type="text/javascript" src="js/timer-ang.js"></script>
+
+
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
 </body>
 </html>
