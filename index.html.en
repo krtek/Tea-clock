@@ -107,7 +107,7 @@
                     <a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName">{{displayName}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tootlip"
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tooltip"
                        title="Time to steep the tea.">{{displayTime|time}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
@@ -184,7 +184,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
 
-<script type="text/javascript" src="js/teas_cs.js"></script>
+<script type="text/javascript" src="js/teas_en.js"></script>
 <script type="text/javascript" src="js/timer-ang.js"></script>
 
 
