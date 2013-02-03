@@ -13,7 +13,7 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
     <link type="text/css" href="css/override.css" rel="stylesheet"/>
 
@@ -186,6 +186,6 @@
 
 <script type="text/javascript" src="js/timer2.js"></script>
 <script type="text/javascript" src="js/teas_cs.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
 </body>
 </html>
