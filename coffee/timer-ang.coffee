@@ -88,6 +88,10 @@ module.filter('time', () ->
     $('#countdownModal').modal()
     $('#countdownModal').on('hidden', -> $scope.timer = false)
 
+    #Google Analytics
+    _gaq.push(['_trackEvent', 'start-time', $scope.time])
+    _gaq.push(['_trackEvent', 'start-tea', localStorage[CHOSEN_TEA]])
+
     $timeout($scope.onTick, 1000)
 
   $scope.onTick = () ->
@@ -99,7 +103,6 @@ module.filter('time', () ->
       #Display notification only if timer enabled!
       if $scope.timer
         Utils.displayNotification()
-
 
 #Utils
 class Utils
@@ -146,4 +149,13 @@ class Utils
       popup.onclose = pauseAudio
       popup.onclick = pauseAudio
       setTimeout(pauseAudio, CANCEL_TIMEOUT)
+
+#Initialization code
+$(document).ready ->
+  #check webkit notification
+  if (!window.webkitNotifications)
+    $("#notification_not_found").show()
+    $('#btn-run').toggleClass('disabled')
+  #popovers
+  $("[rel='tooltip']").tooltip();
 

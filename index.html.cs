@@ -50,9 +50,9 @@
         <div class="span10">
             <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
-                <h4 class="alert-heading">Je vyžadován Chrome!</h4>
+                <h4 class="alert-heading">Je vyžadován Chrome nebo Firefox!</h4>
                 Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v
-                <strong>Google Chrome.</strong>
+                <strong>Google Chrome</strong> nebo <strong>Google Chrome</strong>.
             </div>
         </div>
     </div>
@@ -107,12 +107,12 @@
                     <a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName">{{displayName}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover"
-                       data-content="Jak dlouho se bude čaj louhovat." data-original-title="Čas">{{displayTime|time}}</a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tooltip"
+                       title="Jak dlouho se bude čaj louhovat.">{{displayTime|time}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="popover"
-                       data-content="Při této teplotě by se měl vybraný čaj louhovat." data-original-title="Teplota">{{displayTemp}}</a>
+                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tooltip"
+                       title="Při této teplotě by se měl vybraný čaj louhovat.">{{displayTemp}}</a>
                 </div>
             </div>
         </div>
@@ -167,7 +167,7 @@
     <div class="modal-body">
         <div style="text-align: center;"><h1>{{actualTime|time}}</h1></div>
         <div class="progress progress-striped active">
-            <div class="bar" style="width: 100%;" id="countdownBar"></div>
+            <div class="bar" ng-style="{'width': actualTime / (time / 100) + '%'}" id="countdownBar"></div>
         </div>
     </div>
     <div class="modal-footer">
