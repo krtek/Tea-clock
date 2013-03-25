@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 3.0.0
+# Version 3.0.1
 
 CACHE:
 #HTML
@@ -14,7 +14,7 @@ img/glyphicons-halflings.png
 
 
 # styles
-http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css
+http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css
 css/override.css
 css/ui-lightness/jquery-ui-1.8.16.custom.css
 css/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png
@@ -33,10 +33,12 @@ css/ui-lightness/images/ui-bg_glass_100_f6f6f6_1x400.png
 css/ui-lightness/images/ui-icons_ffffff_256x240.png
 
 # scripts
-js/timer2.js
 js/teas_en.js
 js/teas_cs.js
-http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js
+js/timer-ang.js
+
+#bootstrap
+http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js
 
 # sound
 snd/alarm.mp3
@@ -44,6 +46,9 @@ snd/alarm.mp3
 # jquery
 http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js
 http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js
+
+#angular
+http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js
 
 # everything else is served from internet
 NETWORK:
