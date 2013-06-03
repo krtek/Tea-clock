@@ -2,6 +2,7 @@ SOUND = true
 CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
+CHOSEN_DEGREE = "chosen_degree"
 
 @module = angular.module('tea', []);
 
@@ -22,6 +23,21 @@ module.directive('slider', ($timeout) ->
       $scope.$watch('time', ->
         slider.slider({ value: $scope.time })
       )
+    })
+
+module.directive('degrees', () ->
+  {
+    restrict: 'A',
+    template: "<button type='button' class='btn' "+
+                        "ng-repeat='degree in degrees' "+
+                        "ng-class='{active: degree.name == chosenDegree.name}'"+
+                        "ng-click='activate(degree)'>{{degree.title}} "+
+              "</button>",
+    controller: ($scope) -> 
+      $scope.activate = (degree) ->
+        $scope.chosenDegree = degree
+        Utils.convertTemp(degree, $scope.displayTemp)
+        $scope.updateDisplay()
     })
 
 module.filter('time', () ->
@@ -52,8 +68,16 @@ module.filter('time', () ->
 
   chosenTea.checked = true
 
+  storedDegree = localStorage[CHOSEN_DEGREE]
+  $scope.chosenDegree = window.degrees[0]
+
+  if storedDegree
+    for degree in window.degrees
+      if degree.name == storedDegree
+        $scope.chosenDegree = degree
+
   # init display
-  Utils.updateInfoPanel($scope, chosenTea)
+  Utils.updateInfoPanel($scope, chosenTea, $scope.chosenDegree)
 
   #check if there is stored time
   $scope.time = localStorage[CUSTOM_TIMER]
@@ -62,11 +86,13 @@ module.filter('time', () ->
 
   $scope.teas = window.teas
 
+  $scope.degrees = window.degrees
 
   # Update displayed tea name etc.
   $scope.updateDisplay = () ->
     tea = $scope.teas[$scope.radio.index]
-    Utils.updateInfoPanel($scope, tea)
+    degree = $scope.degrees[$scope.chosenDegree.name]
+    Utils.updateInfoPanel($scope, tea, degree)
 
   $scope.start = () ->
     permission = window.webkitNotifications.checkPermission()
@@ -77,7 +103,7 @@ module.filter('time', () ->
 
   $scope.onTimerStart = () ->
     console.log("Starting timer for: " + $scope.time)
-    Utils.store($scope.teas[$scope.radio.index].name, $scope.time)
+    Utils.store($scope.teas[$scope.radio.index].name, $scope.time, $scope.chosenDegree.name)
 
     $scope.actualTime = $scope.time
     $scope.timer = true
@@ -114,16 +140,36 @@ class Utils
       secs_remainder = "0" + secs_remainder
     return minutes + ":" + secs_remainder
 
-  Utils.store = (name, time) ->
+  Utils.store = (name, time, degree) ->
     localStorage[CHOSEN_TEA] = name
     localStorage[CUSTOM_TIMER] = time
+    localStorage[CHOSEN_DEGREE] = degree
+
+  Utils.convertTemp = (degree, temperature) ->
+    degreeType = degree.symbol
+    tempIntervPos = temperature.search('-')
+
+    convert = (tempString, degree) ->
+      val = parseInt(tempString)
+      return eval(degree.formula)
+
+    if degreeType != 'C'
+      if tempIntervPos > 0
+        temp1 = temperature.substring(0, tempIntervPos)
+        temp2 = temperature.substring(tempIntervPos+1)
+        convertedTemp = convert(temp1, degree) + ' - ' + convert(temp2, degree)
+      else convertedTemp = convert(temperature, degree)
+    else convertedTemp = temperature
+
+    return convertedTemp.toString()
+
 
   #Updates info panel with new tea
   Utils.updateInfoPanel = ($scope, tea) ->
     $scope.displayTime = tea.time
-    $scope.displayTemp = tea.temp
     $scope.displayName = tea.title
     $scope.time = tea.time
+    $scope.displayTemp = Utils.convertTemp($scope.chosenDegree, tea.temp)
 
   Utils.displayNotification = () ->
     permission = window.webkitNotifications.checkPermission()
