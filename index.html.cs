@@ -47,7 +47,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="span10">
+        <div class="span12">
             <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
                 <h4 class="alert-heading">Je vyžadován Chrome nebo Firefox!</h4>
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="span10">
+        <div class="span12">
             <div class="alert alert-block alert-error" id="notification_disabled" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
                 <h4 class="alert-heading">Jsou vyžadovány notifikace!</h4>
@@ -67,7 +67,7 @@
     </div>
 
     <div class="row">
-        <div class="span7">
+        <div class="span8">
             <div class="well">
                 <form id="form1" class="form-horizontal">
                     <fieldset>
@@ -88,6 +88,10 @@
                                 <slider class="span4" id="slider"></slider>
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label">Supně:</label>
+                            <div degrees class="btn-group controls" data-toggle="buttons-radio" model="model">{{model}}</div>
+                        </div>                        
                     </fieldset>
 
                     <div class="form-actions">
@@ -98,27 +102,27 @@
             </div>
         </div>
 
-        <div class="span3" style="text-align:center">
+        <div class="span4" style="text-align:center">
             <div class="well">
                 <div class="clearfix">
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" id="teaName">{{displayName}}</a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" id="teaName">{{displayName}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tooltip"
+                    <a href="#" class="btn btn-default btn-large" rel="tooltip"
                        title="Jak dlouho se bude čaj louhovat.">{{displayTime|time}}</a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" style="width:120px" rel="tooltip"
-                       title="Při této teplotě by se měl vybraný čaj louhovat.">{{displayTemp}}</a>
+                    <a href="#" class="btn btn-default btn-large" rel="tooltip"
+                       title="Při této teplotě by se měl vybraný čaj louhovat.">{{displayTemp}} °{{chosenDegree.symbol}}</a>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="span7">
+        <div class="span12">
             <p>
                 <g:plusone annotation="inline"
                            href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone>
