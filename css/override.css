@@ -1,9 +1,12 @@
 /* Override some defaults */
 .well {
-    height: 400px; /* To make both blocks same height */
+    height: 470px; /* To make both blocks same height */
  }
 
 .form-actions {
     padding: 19px 20px 10px;
     margin-top: 0px;
+}
+.btn-group {
+	display: block;
 }
