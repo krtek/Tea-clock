@@ -151,7 +151,7 @@ class Utils
 
     convert = (tempString, degree) ->
       val = parseInt(tempString)
-      return eval(degree.formula)
+      degree.formula(val)
 
     if degreeType != 'C'
       if tempIntervPos > 0
