@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">Supně:</label>
+                            <label class="control-label">Stupně:</label>
                             <div degrees class="btn-group controls" data-toggle="buttons-radio" model="model">{{model}}</div>
                         </div>                        
                     </fieldset>
