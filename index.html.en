@@ -78,7 +78,7 @@
                             <div class="controls" ng-repeat="tea in teas">
                                 <label class='radio'>
                                     <input type='radio' ng-model='radio.index' value='{{$index}}'
-                                           ng-checked="tea.checked" ng-change='updateDisplay()'/>{{tea.title}}
+                                           ng-checked="tea.checked" ng-change='updateDisplay()'/><span ng-bind-template="{{tea.title}}"></span>
                                 </label>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
 
                         <div class="control-group">
                             <label class="control-label">Temperature Units:</label>
-                            <div degrees class="btn-group controls" data-toggle="buttons-radio" model="model">{{model}}</div>
+                            <div degrees class="btn-group controls" data-toggle="buttons-radio"></div>
                         </div>
                     </fieldset>
 
@@ -109,15 +109,15 @@
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" id="teaName">{{displayName}}</a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" id="teaName" ng-bind-template="{{displayName}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Time to steep the tea.">{{displayTime|time}}</a><br/><br/>
+                       title="Time to steep the tea." ng-bind-template="{{displayTime|time}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Ideal temperature to steep the tea.">{{displayTemp}} °{{chosenDegree.symbol}}</a>
+                       title="Ideal temperature to steep the tea." ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></a>
                 </div>
             </div>
         </div>
