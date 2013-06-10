@@ -4,7 +4,7 @@ CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 CHOSEN_DEGREE = "chosen_degree"
 
-@module = angular.module('tea', []);
+@module = angular.module('tea', [])
 
 #directives
 module.directive('slider', ($timeout) ->
@@ -17,32 +17,52 @@ module.directive('slider', ($timeout) ->
       value: $scope.time,
       slide: (event, ui) ->
         onSliderChange(event, ui, $scope)
+        $scope.setTime(ui.value)
       change: (event, ui) ->
         onSliderChange(event, ui, $scope)
+        $scope.setTime(ui.value)
       })
       $scope.$watch('time', ->
         slider.slider({ value: $scope.time })
       )
     })
 
-module.directive('degrees', () ->
-  {
-    restrict: 'A',
-    template: "<button type='button' class='btn' "+
-                        "ng-repeat='degree in degrees' "+
-                        "ng-class='{active: degree.name == chosenDegree.name}'"+
-                        "ng-click='activate(degree)'>{{degree.title}} "+
-              "</button>",
-    controller: ($scope) -> 
-      $scope.activate = (degree) ->
-        $scope.chosenDegree = degree
-        Utils.convertTemp(degree, $scope.displayTemp)
-        $scope.updateDisplay()
-    })
-
+#Filters
 module.filter('time', () ->
   (input) ->
     Utils.formatTime(input)
+)
+#Services
+module.service('teaSelection', ['$rootScope', ($rootScope) ->
+  self = this
+  selection = {
+    tea: window.teas[0].name,
+    degree: window.degrees[0].name
+  }
+
+  this.storeSelection = (newSelection) ->
+    selection = newSelection
+    localStorage[CHOSEN_TEA] = selection.tea
+    localStorage[CUSTOM_TIMER] = selection.timer
+    localStorage[CHOSEN_DEGREE] = selection.degree.name
+
+  this.getSelection = () ->
+    return selection
+
+  this.setSelection = (selection) ->
+    $rootScope.$broadcast('$teaSelected', selection)
+
+  this.init = () ->
+    if localStorage[CHOSEN_TEA]
+      selection = {
+        tea: localStorage[CHOSEN_TEA],
+        degree: localStorage[CHOSEN_DEGREE],
+        timer: localStorage[CUSTOM_TIMER]
+      }
+])
+
+module.run((teaSelection) ->
+  teaSelection.init()
 )
 
 #event handlers
@@ -55,44 +75,63 @@ module.filter('time', () ->
     $scope.$apply()
 
 #Controllers
-@TimerController = ($scope, $timeout) ->
-  storedTea = localStorage[CHOSEN_TEA]
+@SliderController = ($scope, teaSelection) ->
+  self = this
+
+  $scope.$on('$teaSelected', (evt, selection) ->
+    self.setFromSelection(selection)
+  )
+
+  this.setFromSelection = (selection) ->
+    $scope.time = selection.timer
+    $scope.displayTime = $scope.time
+
+  $scope.setTime = (time) ->
+    currentSelection = teaSelection.getSelection()
+    currentSelection.timer = time
+    teaSelection.setSelection(currentSelection)
+
+SliderController.$inject= ['$scope', 'teaSelection']
+
+
+@ControlPanelController = ($scope, $timeout, teaSelection) ->
+  self = this
+
   $scope.radio = {index: 0}
-
-  chosenTea = window.teas[0]
-
-  if storedTea
-    for tea in window.teas
-      if tea.name == storedTea
-        chosenTea = tea
-
-  chosenTea.checked = true
-
-  storedDegree = localStorage[CHOSEN_DEGREE]
-  $scope.chosenDegree = window.degrees[0]
-
-  if storedDegree
-    for degree in window.degrees
-      if degree.name == storedDegree
-        $scope.chosenDegree = degree
-
-  # init display
-  Utils.updateInfoPanel($scope, chosenTea, $scope.chosenDegree)
-
-  #check if there is stored time
-  $scope.time = localStorage[CUSTOM_TIMER]
-  if !$scope.time
-    $scope.time = chosenTea.time
-
   $scope.teas = window.teas
-
   $scope.degrees = window.degrees
 
-  # Update displayed tea name etc.
-  $scope.updateDisplay = () ->
-    tea = $scope.teas[$scope.radio.index]
-    degree = $scope.degrees[$scope.chosenDegree.name]
-    Utils.updateInfoPanel($scope, tea, degree)
+  $scope.$on('$teaSelected', (evt, selection) ->
+    self.setFromSelection(selection)
+  )
+
+  this.setFromSelection = (selection) ->
+    if selection.tea
+      for tea in window.teas
+        if tea.name == selection.tea
+          $scope.tea = tea
+          $scope.tea.checked = true
+    
+    if selection.degree
+      for degree in window.degrees
+        if degree.name == selection.degree
+          $scope.chosenDegree = degree
+
+    $scope.time = selection.timer || $scope.tea.time
+
+  this.setFromSelection(teaSelection.getSelection())
+
+  $scope.setTea = (tea) ->
+      currentSelection = teaSelection.getSelection()
+      currentSelection.tea = tea.name
+      currentSelection.timer = tea.time
+      teaSelection.setSelection(currentSelection)
+
+  $scope.setDegree = (degree) ->
+      currentSelection = teaSelection.getSelection()
+      currentSelection.degree = degree.name
+      currentSelection.timer = $scope.time
+      teaSelection.setSelection(currentSelection)
 
   $scope.start = () ->
     permission = window.webkitNotifications.checkPermission()
@@ -103,8 +142,13 @@ module.filter('time', () ->
 
   $scope.onTimerStart = () ->
     console.log("Starting timer for: " + $scope.time)
-    Utils.store($scope.teas[$scope.radio.index].name, $scope.time, $scope.chosenDegree.name)
 
+    teaSelection.storeSelection(selection = {
+      tea: $scope.tea.name,
+      degree: $scope.chosenDegree,
+      timer: $scope.time
+    })
+    $scope.displayName = $scope.tea.title
     $scope.actualTime = $scope.time
     $scope.timer = true
     if (window.webkitNotifications.checkPermission() != 0)
@@ -112,11 +156,12 @@ module.filter('time', () ->
       return
 
     $('#countdownModal').modal()
-    $('#countdownModal').on('hidden', -> $scope.timer = false)
+    $('#countdownModal').on('hidden', ->
+      console.log('closed', $scope)
+      $scope.timer = false)
 
     #Google Analytics
-    _gaq.push(['_trackEvent', 'start-time', $scope.time])
-    _gaq.push(['_trackEvent', 'start-tea', localStorage[CHOSEN_TEA]])
+    Utils.gaTrack(localStorage[CHOSEN_TEA], $scope.chosenDegree, $scope.time)
 
     $timeout($scope.onTick, 1000)
 
@@ -130,6 +175,37 @@ module.filter('time', () ->
       if $scope.timer
         Utils.displayNotification()
 
+ControlPanelController.$inject= ['$scope', '$timeout', 'teaSelection']
+
+
+@InfoPanelController = ($scope, teaSelection) ->
+  self = this
+
+  $scope.$on('$teaSelected', (evt, selection) ->
+    self.setFromSelection(selection)
+  )
+
+  this.setFromSelection = (selection) ->
+    if selection.tea
+      for item in window.teas
+        if item.name == selection.tea
+          tea = item
+
+    if selection.degree
+      for degree in window.degrees
+        if degree.name == selection.degree
+          $scope.chosenDegree = degree
+
+    $scope.displayName = tea.title
+    $scope.time = selection.timer || tea.time
+    $scope.displayTime = $scope.time
+    $scope.displayTemp = Utils.convertTemp($scope.chosenDegree, tea.temp)
+
+
+  this.setFromSelection(teaSelection.getSelection())
+
+InfoPanelController.$inject = ['$scope', 'teaSelection']
+
 #Utils
 class Utils
 
@@ -140,15 +216,9 @@ class Utils
       secs_remainder = "0" + secs_remainder
     return minutes + ":" + secs_remainder
 
-  Utils.store = (name, time, degree) ->
-    localStorage[CHOSEN_TEA] = name
-    localStorage[CUSTOM_TIMER] = time
-    localStorage[CHOSEN_DEGREE] = degree
-
   Utils.convertTemp = (degree, temperature) ->
     degreeType = degree.symbol
     tempIntervPos = temperature.search('-')
-
     convert = (tempString, degree) ->
       val = parseInt(tempString)
       degree.formula(val)
@@ -162,14 +232,6 @@ class Utils
     else convertedTemp = temperature
 
     return convertedTemp.toString()
-
-
-  #Updates info panel with new tea
-  Utils.updateInfoPanel = ($scope, tea) ->
-    $scope.displayTime = tea.time
-    $scope.displayName = tea.title
-    $scope.time = tea.time
-    $scope.displayTemp = Utils.convertTemp($scope.chosenDegree, tea.temp)
 
   Utils.displayNotification = () ->
     permission = window.webkitNotifications.checkPermission()
@@ -196,6 +258,13 @@ class Utils
       popup.onclick = pauseAudio
       setTimeout(pauseAudio, CANCEL_TIMEOUT)
 
+  Utils.gaTrack = (tea, degree, time) ->
+    console.log(tea, degree, time)
+    _gaq.push(['_trackEvent', 'start-tea', tea])
+    _gaq.push(['_trackEvent', 'degree', degree])
+    _gaq.push(['_trackEvent', 'start-time', time])
+
+
 #Initialization code
 $(document).ready ->
   #check webkit notification
@@ -204,4 +273,3 @@ $(document).ready ->
     $('#btn-run').toggleClass('disabled')
   #popovers
   $("[rel='tooltip']").tooltip();
-
