@@ -6,26 +6,28 @@ CHOSEN_DEGREE = "chosen_degree"
 
 @module = angular.module('tea', [])
 
-#directives
 module.directive('slider', ($timeout) ->
    {
     restrict: 'E',
     link: ($scope, $element, $attrs) ->
-      slider = $element.slider({
-      min: 1,
-      max: 659,
-      value: $scope.time,
-      slide: (event, ui) ->
-        onSliderChange(event, ui, $scope)
-        $scope.setTime(ui.value)
-      change: (event, ui) ->
-        onSliderChange(event, ui, $scope)
-        $scope.setTime(ui.value)
-      })
+      $element.slider({
+        min: 1,
+        max: 659,
+        value: $scope.time,
+        slide: (event, ui) ->
+          $scope.setTime(ui.value)
+          if !$scope.$$phase
+            $scope.$apply()
+        change: (event, ui) ->
+          $scope.setTime(ui.value)
+          if !$scope.$$phase
+            $scope.$apply()
+        })
       $scope.$watch('time', ->
-        slider.slider({ value: $scope.time })
-      )
-    })
+        $element.slider({ value: $scope.time })
+      )  
+    }
+)
 
 #Filters
 module.filter('time', () ->
@@ -64,15 +66,6 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
 module.run((teaSelection) ->
   teaSelection.init()
 )
-
-#event handlers
-@onSliderChange = (event, ui, $scope) ->
-  $scope.time = ui.value
-  $scope.displayTime = $scope.time
-
-  #$apply only if not already applied
-  if !$scope.$$phase
-    $scope.$apply()
 
 #Controllers
 @SliderController = ($scope, teaSelection) ->
@@ -157,7 +150,6 @@ SliderController.$inject= ['$scope', 'teaSelection']
 
     $('#countdownModal').modal()
     $('#countdownModal').on('hidden', ->
-      console.log('closed', $scope)
       $scope.timer = false)
 
     #Google Analytics
@@ -259,7 +251,6 @@ class Utils
       setTimeout(pauseAudio, CANCEL_TIMEOUT)
 
   Utils.gaTrack = (tea, degree, time) ->
-    console.log(tea, degree, time)
     _gaq.push(['_trackEvent', 'start-tea', tea])
     _gaq.push(['_trackEvent', 'degree', degree])
     _gaq.push(['_trackEvent', 'start-time', time])
