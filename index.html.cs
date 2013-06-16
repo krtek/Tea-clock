@@ -78,7 +78,7 @@
                                 <div class="controls" ng-repeat="tea in teas">
                                     <label class='radio'>
                                         <input type='radio' ng-model='radio.index' value='{{$index}}'
-                                               ng-checked="tea.checked" ng-change='updateDisplay()'/>{{tea.title}}
+                                               ng-checked="tea.checked" ng-change='updateDisplay()'/><span ng-bind-template="{{tea.title}}"></span>
                                     </label>
                                 </div>
                             </div>
@@ -89,14 +89,14 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">Supně:</label>
-                            <div degrees class="btn-group controls" data-toggle="buttons-radio" model="model">{{model}}</div>
+                            <label class="control-label">Stupně:</label>
+                            <div degrees class="btn-group controls" data-toggle="buttons-radio"></div>
                         </div>                        
                     </fieldset>
 
                     <div class="form-actions">
                         <button class="btn btn-danger btn-large" type="button" ng-click="start()">
-                            <i class="icon-time icon-white"></i>Louhuj</button>&nbsp;
+                            <i class="icon-time icon-white"></i> Louhuj</button>&nbsp;
                     </div>
                 </form>
             </div>
@@ -108,15 +108,15 @@
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" id="teaName">{{displayName}}</a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" id="teaName" ng-bind-template="{{displayName}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Jak dlouho se bude čaj louhovat.">{{displayTime|time}}</a><br/><br/>
+                       title="Jak dlouho se bude čaj louhovat." ng-bind-template="{{displayTime|time}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
                     <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Při této teplotě by se měl vybraný čaj louhovat.">{{displayTemp}} °{{chosenDegree.symbol}}</a>
+                       title="Při této teplotě by se měl vybraný čaj louhovat." ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></a>
                 </div>
             </div>
         </div>
