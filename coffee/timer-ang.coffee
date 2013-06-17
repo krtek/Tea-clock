@@ -34,6 +34,12 @@ module.filter('time', () ->
   (input) ->
     Utils.formatTime(input)
 )
+module.filter('i18n', ['localize', (localize) ->
+  (input) ->
+    if input != undefined
+      localize.getLocalizedString(input)
+])
+
 #Services
 module.service('teaSelection', ['$rootScope', ($rootScope) ->
   self = this
@@ -62,8 +68,43 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
         timer: localStorage[CUSTOM_TIMER]
       }
 ])
+module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootScope, $locale, $http, $filter) ->
+  self = this
+  this.dictionary = []
+  this.resourceFileLoaded = false
+  self.dictionary = ''
 
-module.run((teaSelection) ->
+  this.successCallback = (data) ->
+    self.dictionary = data
+    this.resourceFileLoaded = true;
+    $rootScope.$broadcast('localizeResourcesUpdates')
+
+  this.initLocalizedResources = () ->
+    language = $locale.id
+    url = 'i18n/resources-locale_' + language + '.js'
+
+    $http({ method:"GET", url:url, cache:false })
+      .success(this.successCallback).error( () ->
+        url = 'i18n/resources-locale_default.js'
+        $http({ method:"GET", url:url, cache:false })
+          .success(this.successCallback)
+      )
+
+  this.getLocalizedString = (value) ->
+    result = ''
+
+    if this.dictionary != [] && this.dictionary.length > 0
+      entry = $filter('filter')(this.dictionary, (element) ->
+        return element.key == value
+      )[0]
+
+      result = entry.value
+
+    return result
+
+])
+module.run((teaSelection, localize) ->
+  localize.initLocalizedResources()
   teaSelection.init()
 )
 
@@ -165,7 +206,7 @@ SliderController.$inject= ['$scope', 'teaSelection']
       $('#countdownModal').modal("hide")
       #Display notification only if timer enabled!
       if $scope.timer
-        Utils.displayNotification()
+        Utils.displayNotification(title, message)
 
 ControlPanelController.$inject= ['$scope', '$timeout', 'teaSelection']
 
