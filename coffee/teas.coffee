@@ -18,4 +18,4 @@ window.degrees = [
   {name: "romer", title: "Rømer", symbol: "Rø", formula: (val) -> return val*21/40+7.5}
 ]
 
-window.notificationTemplate = {title: "Tea clock", body: "Your tea is ready!" }
+window.notificationTemplate = {title: "_AppTitle_", body: "_NotificationMessage_" }
