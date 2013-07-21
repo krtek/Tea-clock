@@ -80,12 +80,11 @@ module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootS
     $rootScope.$broadcast('localizeResourcesUpdates')
 
   this.initLocalizedResources = () ->
-    language = $locale.id
-    url = 'i18n/resources-locale_' + language + '.js'
+    url = 'i18n/resources-locale.js'
 
     $http({ method:"GET", url:url, cache:false })
       .success(this.successCallback).error( () ->
-        url = 'i18n/resources-locale_default.js'
+        url = 'i18n/resources-locale.js.en'
         $http({ method:"GET", url:url, cache:false })
           .success(this.successCallback)
       )
@@ -128,7 +127,7 @@ module.run((teaSelection, localize) ->
 SliderController.$inject= ['$scope', 'teaSelection']
 
 
-@ControlPanelController = ($scope, $timeout, teaSelection) ->
+@ControlPanelController = ($scope, $timeout, teaSelection, localize) ->
   self = this
 
   $scope.radio = {index: 0}
@@ -206,9 +205,9 @@ SliderController.$inject= ['$scope', 'teaSelection']
       $('#countdownModal').modal("hide")
       #Display notification only if timer enabled!
       if $scope.timer
-        Utils.displayNotification(title, message)
+        Utils.displayNotification(localize.getLocalizedString('_AppTitle_'), localize.getLocalizedString('_NotificationMessage_'))
 
-ControlPanelController.$inject= ['$scope', '$timeout', 'teaSelection']
+ControlPanelController.$inject= ['$scope', '$timeout', 'teaSelection', 'localize']
 
 
 @InfoPanelController = ($scope, teaSelection) ->
@@ -266,12 +265,12 @@ class Utils
 
     return convertedTemp.toString()
 
-  Utils.displayNotification = () ->
+  Utils.displayNotification = (title, message) ->
     permission = window.webkitNotifications.checkPermission()
     console.log("Permission: #{permission}")
     window.popup = window.webkitNotifications.createNotification("img/icon.png",
-    window.notificationTemplate.title,
-    window.notificationTemplate.body)
+    title,
+    message)
 
     Utils.ding('snd/alarm.mp3', window.popup)
     popup.show()
