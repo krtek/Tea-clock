@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!--<html lang="cs" ng-app manifest="tea-clock.appcache">-->
-<html lang="cs" ng-app="tea">
+<html lang="en" ng-app="tea">
 <head>
     <meta charset="utf-8">
-    <title>Tea-clock</title>
-    <meta name="description" content="">
+    <title>{{'_AppTitle_' | i18n}}</title>
+    <meta name="description" content="Tea timer">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -24,7 +24,7 @@
 
     <!-- Place this render call where appropriate -->
     <script type="text/javascript">
-        window.___gcfg = {lang: 'cs'};
+        window.___gcfg = {lang:'en'};
 
         (function () {
             var po = document.createElement('script');
@@ -42,26 +42,27 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <h1>Tea-clock
-            <small>Ať se louhuje...</small>
+        <h1>
+            <span ng-bind-template="{{'_Title_' | i18n}}"></span>
+            <small ng-bind-template="{{'_SubTitle_' | i18n}}"></small>
         </h1>
     </div>
     <div class="row">
         <div class="span12">
             <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
-                <h4 class="alert-heading">Je vyžadován Chrome nebo Firefox!</h4>
-                Tato aplikace potřebuje ke svému běhu <strong>desktopové notifikace</strong>, které aktuálně fungují pouze v
-                <strong>Google Chrome</strong> nebo <strong>Google Chrome</strong>.
+                <h4 class="alert-heading">Chrome or Firefox required!</h4>
+                This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google
+                Chrome</strong> or <strong>Mozilla Firefox</strong>.
             </div>
         </div>
     </div>
     <div class="row">
         <div class="span12">
             <div class="alert alert-block alert-error" id="notification_disabled" hidden="hidden">
-                <a class="close" data-dismiss="alert">×</a>
-                <h4 class="alert-heading">Jsou vyžadovány notifikace!</h4>
-                Tato aplikace opravdu potřebuje <strong>desktopové notifikace</strong>, povolte je, prosím!
+                <a class="close" data-dismiss="alert">?</a>
+                <h4 class="alert-heading">Notifications required!</h4>
+                This application really needs <strong>desktop notifications</strong>, please enable it!
             </div>
         </div>
     </div>
@@ -71,41 +72,42 @@
             <div class="well" ng-controller="ControlPanelController">
                 <form id="form1" class="form-horizontal">
                     <fieldset>
-                        <legend>Jak pijete svůj čaj?</legend>
-                            <label class="control-label">Druh čaje:</label>
+                        <legend ng-bind-template="{{'_Slogan_' | i18n}}"></legend>
+                        <label class="control-label"><span ng-bind-template="{{'_TeaLabel_' | i18n}}"></span></label>
 
-                            <div class="control-group">
-                                <div class="controls" ng-repeat="tea in teas">
-                                    <label class='radio'>
-                                        <input type='radio' ng-model='radio.index' value='{{$index}}'
-                                               ng-checked="tea.checked" ng-change='setTea(tea)'/><span ng-bind-template="{{tea.title}}"></span>
-                                    </label>
-                                </div>
-                            </div>
                         <div class="control-group">
-                            <label class="control-label" for="slider">Úprava času:</label>
+                            <div class="controls" ng-repeat="tea in teas">
+                                <label class='radio'>
+                                    <input type='radio' ng-model='radio.index' value='{{$index}}'
+                                           ng-checked="tea.checked" ng-change="setTea(tea)"/><span ng-bind-template="{{tea.title | i18n}}"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="slider" ng-bind-template="{{'_TimeLabel_' | i18n}}"></label>
                             <div class="controls">
                                 <slider class="span4" id="slider" ng-controller="SliderController"></slider>
                             </div>
                         </div>
+
                         <div class="control-group">
-                            <label class="control-label">Stupně:</label>
+                            <label class="control-label" ng-bind-template="{{'_TemperatureLabel_' | i18n}}"></label>
                             <div class="btn-group controls" data-toggle="buttons-radio">
                                 <button type="button" class="btn" ng-repeat="degree in degrees" ng-class="{active: degree.name == chosenDegree.name}" ng-click="setDegree(degree)" ng-bind-template="{{degree.title}}"></button>
                             </div>
-                        </div>                        
+                        </div>
                     </fieldset>
 
                     <div class="form-actions">
                         <button class="btn btn-danger btn-large" type="button" ng-click="start()">
-                            <i class="icon-time icon-white"></i> Louhuj</button>&nbsp;
+                            <i class="icon-time icon-white"></i> <span ng-bind-template="{{'_SteepButtonLabel_' | i18n}}"></span></button>&nbsp;
                     </div>
                 </form>
                 <!-- modal(s) -->
                 <div class="modal hide fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3>{{displayName}}</h3>
+                        <h3>{{displayName | i18n}}</h3>
                     </div>
                     <div class="modal-body">
                         <div style="text-align: center;"><h1>{{actualTime|time}}</h1></div>
@@ -114,12 +116,11 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary btn-large" ng-click="timer = false" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i
-                                class="icon-repeat icon-white"></i>
-                            Reset
+                        <button class="btn btn-primary btn-large" ng-click="timer = false" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i class="icon-repeat icon-white"></i>
+                            <span ng-bind-template="{{'_ResetButtonLabel_' | i18n}}"></span>
                         </button>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -129,15 +130,13 @@
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" id="teaName" ng-bind-template="{{displayName}}"></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" id="teaName" ng-bind-template="{{displayName | i18n}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Jak dlouho se bude čaj louhovat." ng-bind-template="{{displayTime|time}}"></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-large" rel="tooltip" title="{{_TimeTooltip_ | i18n}}"><span ng-bind-template="{{displayTime|time}}"></span></a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" rel="tooltip"
-                       title="Při této teplotě by se měl vybraný čaj louhovat." ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></a>
+                    <a href="#" class="btn btn-default btn-large" rel="tooltip" title="{{_TemperatureTooltip_ | i18n}}"><span ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></span></a>
                 </div>
             </div>
         </div>
@@ -154,7 +153,6 @@
 
 
     <footer>
-        <!--           <p>&copy; lukas.marek (at) gmail.com, 2011</p> -->
         <script type="text/javascript">
 
             var _gaq = _gaq || [];
@@ -183,13 +181,14 @@
 </div>
 <!-- /container -->
 
+
 <!-- scripts -->
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
 
-<script type="text/javascript" src="js/teas_cs.js"></script>
+<script type="text/javascript" src="js/teas.js"></script>
 <script type="text/javascript" src="js/timer-ang.js"></script>
 
 
