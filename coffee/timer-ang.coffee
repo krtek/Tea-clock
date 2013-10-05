@@ -2,7 +2,6 @@ SOUND = true
 CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
-CHOSEN_DEGREE = "chosen_degree"
 
 @module = angular.module('tea', [])
 
@@ -52,7 +51,6 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
     selection = newSelection
     localStorage[CHOSEN_TEA] = selection.tea
     localStorage[CUSTOM_TIMER] = selection.timer
-    localStorage[CHOSEN_DEGREE] = selection.degree.name
 
   this.getSelection = () ->
     return selection
@@ -64,7 +62,6 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
     if localStorage[CHOSEN_TEA]
       selection = {
         tea: localStorage[CHOSEN_TEA],
-        degree: localStorage[CHOSEN_DEGREE],
         timer: localStorage[CUSTOM_TIMER]
       }
 ])
@@ -178,7 +175,6 @@ SliderController.$inject= ['$scope', 'teaSelection']
 
     teaSelection.storeSelection(selection = {
       tea: $scope.tea.name,
-      degree: $scope.chosenDegree,
       timer: $scope.time
     })
     $scope.displayName = $scope.tea.title
