@@ -49,9 +49,9 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
 
   this.storeSelection = (newSelection) ->
     selection = newSelection
-    localStorage[CHOSEN_TEA] = selection.tea
-    localStorage[CUSTOM_TIMER] = selection.timer
-    localStorage[CHOSEN_DEGREE] = selection.degree.name
+    localStorage.setItem(CHOSEN_TEA, selection.tea)
+    localStorage.setItem(CUSTOM_TIMER, selection.timer)
+    localStorage.setItem(CHOSEN_DEGREE, selection.degree)
 
   this.getSelection = () ->
     return selection
@@ -306,4 +306,4 @@ $(document).ready ->
     $("#notification_not_found").show()
     $('#btn-run').toggleClass('disabled')
   #popovers
-  $("[rel='tooltip']").tooltip();
+  #$("[rel='tooltip']").tooltip();

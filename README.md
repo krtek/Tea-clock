@@ -16,3 +16,8 @@ Written in Coffeescript, with Angular.js and Twitter Bootstrap.
 
 ## Watch for changes and recompile
 1. `grunt watch`
+
+## Unit testing
+1. Install karma by running `npm install -g karma`
+2. Run tests by running `karma start tests/karma.conf.js`
+3. Unit tests are located in `tests/unit`
