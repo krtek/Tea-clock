@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<html lang="cs" ng-app manifest="tea-clock.appcache">-->
+<!--TODO <html lang="cs" ng-app manifest="tea-clock.appcache">-->
 <html lang="en" ng-app="tea">
 <head>
     <meta charset="utf-8">
@@ -8,14 +8,9 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <!-- Le styles -->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+    <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="libs/jquery-ui/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet"/>
     <link type="text/css" href="css/override.css" rel="stylesheet"/>
 
     <!-- Le fav and touch icons -->
@@ -48,7 +43,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             <div class="alert alert-block alert-error" id="notification_not_found" hidden="hidden">
                 <a class="close" data-dismiss="alert">×</a>
                 <h4 class="alert-heading">Chrome or Firefox required!</h4>
@@ -58,7 +53,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             <div class="alert alert-block alert-error" id="notification_disabled" hidden="hidden">
                 <a class="close" data-dismiss="alert">?</a>
                 <h4 class="alert-heading">Notifications required!</h4>
@@ -68,81 +63,86 @@
     </div>
 
     <div class="row">
-        <div class="span8">
+        <div class="col-md-8">
             <div class="well" ng-controller="ControlPanelController">
                 <form id="form1" class="form-horizontal">
                     <fieldset>
                         <legend ng-bind-template="{{'_Slogan_' | i18n}}"></legend>
-                        <label class="control-label"><span ng-bind-template="{{'_TeaLabel_' | i18n}}"></span></label>
-
-                        <div class="control-group">
+                        <div class="form-group">
+                            <label class="control-label"><span ng-bind-template="{{'_TeaLabel_' | i18n}}"></span></label>
                             <div class="controls" ng-repeat="tea in teas">
-                                <label class='radio'>
-                                    <input type='radio' ng-model='radio.index' value='{{$index}}'
-                                           ng-checked="tea.checked" ng-change="setTea(tea)"/><span ng-bind-template="{{tea.title | i18n}}"></span>
-                                </label>
+                                <div class="radio">
+                                    <label>
+                                        <input type='radio' ng-model='radio.index' value='{{$index}}'
+                                               ng-checked="tea.checked" ng-change="setTea(tea)"/>
+                                            {{tea.title | i18n}}
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="slider" ng-bind-template="{{'_TimeLabel_' | i18n}}"></label>
+                        <div class="form-group">
+                            <label class="control-label" ng-bind-template="{{'_TimeLabel_' | i18n}}"></label>
                             <div class="controls">
-                                <slider class="span4" id="slider" ng-controller="SliderController"></slider>
+                                <slider class="col-lg-8" id="slider" ng-controller="SliderController"></slider>
                             </div>
                         </div>
-
-                        <div class="control-group">
+                        <div class="form-group">
                             <label class="control-label" ng-bind-template="{{'_TemperatureLabel_' | i18n}}"></label>
-                            <div class="btn-group controls" data-toggle="buttons-radio">
-                                <button type="button" class="btn" ng-repeat="degree in degrees" ng-class="{active: degree.name == chosenDegree.name}" ng-click="setDegree(degree)" ng-bind-template="{{degree.title}}"></button>
+                            <div class="btn-group controls">
+                                <button type="button" class="btn btn-default" ng-repeat="degree in degrees" ng-class="{active: degree.name == chosenDegree.name}" ng-click="setDegree(degree)" ng-bind-template="{{degree.title}}"></button>
                             </div>
                         </div>
                     </fieldset>
 
                     <div class="form-actions">
                         <button class="btn btn-danger btn-large" type="button" ng-click="start()">
-                            <i class="icon-time icon-white"></i> <span ng-bind-template="{{'_SteepButtonLabel_' | i18n}}"></span></button>&nbsp;
+                            <i class="glyphicon glyphicon-time icon-white"></i> <span ng-bind-template="{{'_SteepButtonLabel_' | i18n}}"></span></button>&nbsp;
                     </div>
                 </form>
                 <!-- modal(s) -->
-                <div class="modal hide fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3>{{displayName | i18n}}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div style="text-align: center;"><h1>{{actualTime|time}}</h1></div>
-                        <div class="progress progress-striped active">
-                            <div class="bar" ng-style="{'width': actualTime / (time / 100) + '%'}" id="countdownBar"></div>
+                <div class="modal fade" id="countdownModal" tabindex="-1" role="dialog" aria-labelledby="countdownLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h3>{{displayName | i18n}}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div style="text-align: center;"><h1>{{actualTime|time}}</h1></div>
+                                <div class="progress">
+                                    <div class="progress-bar" ng-style="{'width': actualTime / (time / 100) + '%'}" id="countdownBar"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary btn-large" ng-click="timer = false" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i class="glyphicon glyphicon-repeat icon-white"></i>
+                                    <span ng-bind-template="{{'_ResetButtonLabel_' | i18n}}"></span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary btn-large" ng-click="timer = false" data-dismiss="modal" aria-hidden="true" id="btn-reset"><i class="icon-repeat icon-white"></i>
-                            <span ng-bind-template="{{'_ResetButtonLabel_' | i18n}}"></span>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="span4" style="text-align:center">
+        <div class="col-md-4" style="text-align:center">
             <div class="well" ng-controller="InfoPanelController">
                 <div class="clearfix">
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" id="teaName" ng-bind-template="{{displayName | i18n}}"></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-lg" id="teaName" ng-bind-template="{{displayName | i18n}}"></a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" rel="tooltip" title="{{_TimeTooltip_ | i18n}}"><span ng-bind-template="{{displayTime|time}}"></span></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-lg" rel="tooltip" title="{{_TimeTooltip_ | i18n}}"><span ng-bind-template="{{displayTime|time}}"></span></a><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-large" rel="tooltip" title="{{_TemperatureTooltip_ | i18n}}"><span ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></span></a>
+                    <a href="#" class="btn btn-default btn-lg" rel="tooltip" title="{{_TemperatureTooltip_ | i18n}}"><span ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></span></a>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             <p>
                 <g:plusone annotation="inline"
                            href="https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp"></g:plusone>
@@ -184,9 +184,9 @@
 
 <!-- scripts -->
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<script src="libs/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+<script src="libs/angular/angular.min.js"></script>
 <script src="i18n/angular-locale.js"></script>
 
 
@@ -194,6 +194,6 @@
 <script type="text/javascript" src="js/timer-ang.js"></script>
 
 
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

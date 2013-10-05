@@ -1,12 +1,18 @@
 /* Override some defaults */
 .well {
-    height: 470px; /* To make both blocks same height */
+    min-height: 500px; /* To make both blocks same height */
  }
 
 .form-actions {
     padding: 19px 20px 10px;
     margin-top: 0px;
 }
+
 .btn-group {
 	display: block;
+}
+
+/* Fix twitter bootstrap bug */
+.form-horizontal .form-group {
+  margin-left: 0px;
 }
