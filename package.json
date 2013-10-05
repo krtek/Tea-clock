@@ -8,17 +8,10 @@
   "description": "Simple but efficient tea timer.",
   "license": "Apache",
   "private": false,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "v1.2.0-rc.2",
-    "bootstrap": "v3.0.0",
-    "jquery": "~2.0.3",
-    "jquery-ui": "~1.10.3"
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-manifest": "~0.4.0"
   }
 }

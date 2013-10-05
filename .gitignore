@@ -2,3 +2,5 @@ js/*
 *~
 .idea
 libs/
+node_modules
+tea-clock.appcache
