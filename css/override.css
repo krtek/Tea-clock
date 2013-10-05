@@ -1,6 +1,6 @@
 /* Override some defaults */
 .well {
-    min-height: 500px; /* To make both blocks same height */
+    min-height: 515px; /* To make both blocks same height */
  }
 
 .form-actions {

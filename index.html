@@ -129,13 +129,21 @@
                     <img src="img/icon_pruhledna.png"><br/><br/>
                 </div>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-lg" id="teaName" ng-bind-template="{{displayName | i18n}}"></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-lg" id="teaName" ng-bind-template="{{displayName | i18n}}"></a>
                 </div>
+                <br><br>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-lg" rel="tooltip" title="{{_TimeTooltip_ | i18n}}"><span ng-bind-template="{{displayTime|time}}"></span></a><br/><br/>
+                    <a href="#" class="btn btn-default btn-lg"><span ng-bind-template="{{displayTime|time}}"></span></a><br>
+                    <small>
+                        {{'_TimeTooltip_' | i18n}}
+                    </small>
                 </div>
+                <br><br>
                 <div class="clearfix">
-                    <a href="#" class="btn btn-default btn-lg" rel="tooltip" title="{{_TemperatureTooltip_ | i18n}}"><span ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></span></a>
+                    <a href="#" class="btn btn-default btn-lg"><span ng-bind-template="{{displayTemp}} °{{chosenDegree.symbol}}"></span></a><br>
+                    <small>
+                        {{'_TemperatureTooltip_' | i18n}}
+                    </small>
                 </div>
             </div>
         </div>

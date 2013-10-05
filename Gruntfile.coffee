@@ -12,7 +12,7 @@ module.exports = (grunt) ->
                 dest: 'js'
                 ext: '.js'
         watch:
-            files: ['index.html', 'coffee/*.coffee']
+            files: ['index.html', 'coffee/*.coffee', 'css/*.css']
             tasks: ['coffee', 'manifest']
 
         manifest:
