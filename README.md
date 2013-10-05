@@ -1,12 +1,18 @@
 # Tea-clock
 Steep your tea right.
 ## Intro
-Application is running on [website](http://tea-clock.com) and as a Chrome Web Store [application](https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp?utm_source=chrome-ntp-icon).
+Currently running on [website](http://tea-clock.com) and as a Chrome Web Store [application](https://chrome.google.com/webstore/detail/hmldmlgafdbnfhhicheojakimpmocggp?utm_source=chrome-ntp-icon).
+Written in Coffeescript, with Angular.js and Twitter Bootstrap.
 
-## How to
-1. Install [coffee script](http://jashkenas.github.com/coffee-script/)
-2. Compile *.cs into *.js:
- 
-	`coffee -o js -c coffee/`
+
+
+## Setup dev environment
+1. `sudo npm install -g bower grunt-cli`
+2. `npm install` - installs development libraries (coffeescript etc.)
+2. `bower install` - downloads Angular.js and Twitter Bootstrap
+3. `grunt` - compiles all *.coffee to *.js and generates HTML5 appcache
 3. Deploy on apache server
 4. Enjoy!
+
+## Watch for changes and recompile
+1. `grunt watch`
