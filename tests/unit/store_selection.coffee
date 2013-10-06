@@ -1,3 +1,4 @@
+#Test for storage selection service
 describe('service', () ->
     beforeEach(angular.mock.module('tea', () ->
     ))
@@ -18,7 +19,7 @@ describe('service', () ->
     )
 
     describe('Tea storage service test', () ->
-        it('Check default values', inject((teaSelection) ->
+        it('Check empty storage default values', inject((teaSelection) ->
             selection = teaSelection.getSelection()
             expect(selection.tea).toEqual('white')
             expect(selection.degree).toEqual('celsius')
@@ -34,9 +35,34 @@ describe('service', () ->
             expect(localStorage.getItem('custom_timer')).toEqual('666')
             expect(localStorage.getItem('chosen_degree')).toEqual('kelvin')
         ))
+    )
 
+    describe('Upgrading user test (has no chosen_degree in local storage)', () ->
+        beforeEach(() ->
+            localStorage.setItem('chosen_tea', 'white')
+            localStorage.setItem('custom_timer', 10)
+        )
+
+        it('Check storage without degrees (might happen)', inject((teaSelection) ->
+            selection = teaSelection.getSelection()
+            expect(selection.tea).toEqual('white')
+            expect(selection.timer).toEqual('10')
+            expect(selection.degree).toEqual('celsius')
+        ))
+    )
+
+    describe('Normal user test', () ->
+        beforeEach(() ->
+            localStorage.setItem('chosen_tea', 'oolong')
+            localStorage.setItem('custom_timer', 10)
+            localStorage.setItem('chosen_degree', 'kelvin')
+        )
+
+        it('Check storage without degrees (might happen)', inject((teaSelection) ->
+            selection = teaSelection.getSelection()
+            expect(selection.tea).toEqual('oolong')
+            expect(selection.timer).toEqual('10')
+            expect(selection.degree).toEqual('kelvin')
+        ))
     )
 )
-
-
-

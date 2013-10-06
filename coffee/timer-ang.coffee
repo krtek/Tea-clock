@@ -56,19 +56,20 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
     this.getSelection = () ->
         return selection
 
-    this.setSelection = (selection) ->
+    this.broadcastSelection = (selection) ->
         $rootScope.$broadcast('$teaSelected', selection)
 
     this.init = () ->
-        if localStorage[CHOSEN_TEA]
+        item = localStorage.getItem(CHOSEN_TEA)
+        if localStorage.getItem(CHOSEN_TEA)
             #This might not be initialized
             degs = 'celsius'
-            if localStorage[CHOSEN_DEGREE]
-                degs = localStorage[CHOSEN_DEGREE]
+            if localStorage.getItem(CHOSEN_DEGREE)
+                degs = localStorage.getItem(CHOSEN_DEGREE)
             selection = {
-                tea: localStorage[CHOSEN_TEA]
+                tea: localStorage.getItem(CHOSEN_TEA)
                 degree: degs
-                timer: localStorage[CUSTOM_TIMER]
+                timer: localStorage.getItem(CUSTOM_TIMER)
             }
 ])
 module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootScope, $locale, $http, $filter) ->
@@ -124,7 +125,7 @@ module.run((teaSelection, localize) ->
     $scope.setTime = (time) ->
         currentSelection = teaSelection.getSelection()
         currentSelection.timer = time
-        teaSelection.setSelection(currentSelection)
+        teaSelection.broadcastSelection(currentSelection)
 
 SliderController.$inject = ['$scope', 'teaSelection']
 
@@ -160,13 +161,13 @@ SliderController.$inject = ['$scope', 'teaSelection']
         currentSelection = teaSelection.getSelection()
         currentSelection.tea = tea.name
         currentSelection.timer = tea.time
-        teaSelection.setSelection(currentSelection)
+        teaSelection.broadcastSelection(currentSelection)
 
     $scope.setDegree = (degree) ->
         currentSelection = teaSelection.getSelection()
         currentSelection.degree = degree.name
         currentSelection.timer = $scope.time
-        teaSelection.setSelection(currentSelection)
+        teaSelection.broadcastSelection(currentSelection)
 
     $scope.start = () ->
         permission = window.webkitNotifications.checkPermission()
