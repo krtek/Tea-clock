@@ -143,13 +143,13 @@ SliderController.$inject = ['$scope', 'teaSelection']
 
     this.setFromSelection = (selection) ->
         if selection.tea
-            for tea in window.teas
+            for tea in $scope.teas
                 if tea.name == selection.tea
                     $scope.tea = tea
                     $scope.tea.checked = true
 
         if selection.degree
-            for degree in window.degrees
+            for degree in $scope.degrees
                 if degree.name == selection.degree
                     $scope.chosenDegree = degree
 
@@ -179,11 +179,12 @@ SliderController.$inject = ['$scope', 'teaSelection']
     $scope.onTimerStart = () ->
         console.log("Starting timer for: " + $scope.time)
 
-        teaSelection.storeSelection(selection = {
+        teaSelection.storeSelection({
             tea: $scope.tea.name
-            degree: $scope.chosenDegree
+            degree: $scope.chosenDegree.name
             timer: $scope.time
         })
+
         $scope.displayName = $scope.tea.title
         $scope.actualTime = $scope.time
         $scope.timer = true
@@ -196,7 +197,7 @@ SliderController.$inject = ['$scope', 'teaSelection']
             $scope.timer = false)
 
         #Google Analytics
-        Utils.gaTrack(localStorage[CHOSEN_TEA], $scope.chosenDegree, $scope.time)
+        Utils.gaTrack(localStorage[CHOSEN_TEA], $scope.chosenDegree.name, $scope.time)
 
         $timeout($scope.onTick, 1000)
 
@@ -212,7 +213,6 @@ SliderController.$inject = ['$scope', 'teaSelection']
                     localize.getLocalizedString('_NotificationMessage_'))
 
 ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize']
-
 
 @InfoPanelController = ($scope, teaSelection) ->
     self = this
