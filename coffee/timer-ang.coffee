@@ -204,13 +204,21 @@ SliderController.$inject = ['$scope', 'teaSelection']
     $scope.onTick = () ->
         $scope.actualTime -= 1
         if ($scope.timer && $scope.actualTime >= 0)
+            updateTitle($scope.actualTime)
             $timeout($scope.onTick, 1000)
         else
             $('#countdownModal').modal("hide")
+            resetTitle()
             #Display notification only if timer enabled!
             if $scope.timer
                 Utils.displayNotification(localize.getLocalizedString('_AppTitle_'),
                     localize.getLocalizedString('_NotificationMessage_'))
+
+    updateTitle = (time) ->
+        document.title = "[#{Utils.formatTime(time)}] " + localize.getLocalizedString('_AppTitle_')
+
+    resetTitle = () ->
+        document.title = localize.getLocalizedString('_AppTitle_')
 
 ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize']
 
