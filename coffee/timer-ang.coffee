@@ -71,12 +71,14 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
                 degree: degs
                 timer: localStorage.getItem(CUSTOM_TIMER)
             }
+
+    return this
 ])
 module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootScope, $locale, $http, $filter) ->
     self = this
     this.dictionary = []
     this.resourceFileLoaded = false
-    self.dictionary = ''
+    this.dictionary = ''
 
     this.successCallback = (data) ->
         self.dictionary = data
@@ -104,7 +106,9 @@ module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootS
 
         return result
 
+    return this
 ])
+
 module.run((teaSelection, localize) ->
     localize.initLocalizedResources()
     teaSelection.init()
@@ -307,7 +311,6 @@ class Utils
         _gaq.push(['_trackEvent', 'start-tea', tea])
         _gaq.push(['_trackEvent', 'degree', degree])
         _gaq.push(['_trackEvent', 'start-time', time])
-
 
 #Initialization code
 $(document).ready ->
