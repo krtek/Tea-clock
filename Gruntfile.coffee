@@ -4,13 +4,11 @@ module.exports = (grunt) ->
     grunt.initConfig
         pkg: grunt.file.readJSON("package.json")
         coffee:
-            compile:
-                expand: true
-                flatten: false
-                cwd: 'coffee'
-                src: ['*.coffee']
-                dest: 'js'
-                ext: '.js'
+            compileJoined:
+                options:
+                    join: true
+                files:
+                    'js/app.js': ['coffee/*.coffee']
         watch:
             files: ['index.html', 'coffee/*.coffee', 'css/*.css']
             tasks: ['coffee', 'manifest']
@@ -31,7 +29,7 @@ module.exports = (grunt) ->
                     hash: true
 
                 src: [
-                    'index.html'
+                    #'index.html'
                     'js/*.js'
                     'css/*.css'
                     'snd/*'
