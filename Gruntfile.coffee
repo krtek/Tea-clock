@@ -8,7 +8,9 @@ module.exports = (grunt) ->
                 options:
                     join: true
                 files:
-                    'js/app.js': ['coffee/*.coffee']
+                    'js/app.js': ['coffee/app.coffee', 'coffee/teas.coffee']
+                    'js/background.js': ['coffee/background.coffee']
+
         watch:
             files: ['index.html', 'coffee/*.coffee', 'css/*.css']
             tasks: ['coffee', 'manifest']
