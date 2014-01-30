@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.10",
+    "angular": "1.2.10",
     "bootstrap": "~v3.0.0",
     "angular-slider": "~0.1.6"
   },

@@ -4,30 +4,7 @@ CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 CHOSEN_DEGREE = "chosen_degree"
 
-@module = angular.module('tea', [])
-
-module.directive('slider', ($timeout) ->
-    {
-    restrict: 'E',
-    link: ($scope, $element, $attrs) ->
-        $element.slider({
-            min: 1,
-            max: 659,
-            value: $scope.time,
-            slide: (event, ui) ->
-                $scope.setTime(ui.value)
-                if !$scope.$$phase
-                    $scope.$apply()
-            change: (event, ui) ->
-                $scope.setTime(ui.value)
-                if !$scope.$$phase
-                    $scope.$apply()
-        })
-        $scope.$watch('time', ->
-            $element.slider({ value: $scope.time })
-        )
-    }
-)
+@module = angular.module('tea', ['uiSlider'])
 
 #Filters
 module.filter('time', () ->
@@ -113,26 +90,6 @@ module.run((teaSelection, localize) ->
     localize.initLocalizedResources()
     teaSelection.init()
 )
-
-#Controllers
-@SliderController = ($scope, teaSelection) ->
-    self = this
-
-    $scope.$on('$teaSelected', (evt, selection) ->
-        self.setFromSelection(selection)
-    )
-
-    this.setFromSelection = (selection) ->
-        $scope.time = selection.timer
-        $scope.displayTime = $scope.time
-
-    $scope.setTime = (time) ->
-        currentSelection = teaSelection.getSelection()
-        currentSelection.timer = time
-        teaSelection.broadcastSelection(currentSelection)
-
-SliderController.$inject = ['$scope', 'teaSelection']
-
 
 @ControlPanelController = ($scope, $timeout, teaSelection, localize) ->
     self = this
@@ -223,6 +180,12 @@ SliderController.$inject = ['$scope', 'teaSelection']
 
     resetTitle = () ->
         document.title = localize.getLocalizedString('_AppTitle_')
+
+    $scope.$watch('time', (time) ->
+        currentSelection = teaSelection.getSelection()
+        currentSelection.timer = time
+        teaSelection.broadcastSelection(currentSelection)
+    )
 
 ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize']
 
