@@ -38,9 +38,9 @@ module.exports = (grunt) ->
                     'libs/bootstrap/dist/js/*.min.js'
                     'libs/bootstrap/dist/css/*.min.css'
                     'libs/bootstrap/dist/fonts/*'
-                    'libs/jquery-ui/themes/ui-lightness/*.min.css'
-                    'libs/jquery-ui/themes/ui-lightness/images/*'
                     'libs/jquery-ui/ui/minified/jquery-ui.js'
+                    'libs/angular-slider/angular-slider.min.js'
+                    'libs/angular-slider/angular-slider.min.css'
                 ]
                 dest: 'tea-clock.appcache'
 
