@@ -5,4 +5,5 @@ Options +MultiViews
 AddLanguage en en
 AddLanguage cs cs
 AddLanguage sk sk
-LanguagePriority cs sk en
+AddLanguage sq sq
+LanguagePriority cs sk sq en
