@@ -3,6 +3,7 @@ CANCEL_TIMEOUT = 10000
 CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 CHOSEN_DEGREE = "chosen_degree"
+NOTIFICATION_ID = 'tea clock'
 
 @module = angular.module('tea', ['uiSlider'])
 
@@ -19,16 +20,19 @@ module.filter('i18n', ['localize', (localize) ->
 
 #Services
 module.service('teaSelection', ['$rootScope', ($rootScope) ->
+    self = this
+
     selection = {
-        tea: window.teas[0].name,
-        degree: window.degrees[0].name
+        chosen_tea: window.teas[0].name
+        chosen_degree: window.degrees[0].name
+        custom_timer: null
     }
 
     this.storeSelection = (newSelection) ->
         selection = newSelection
-        localStorage.setItem(CHOSEN_TEA, selection.tea)
-        localStorage.setItem(CUSTOM_TIMER, selection.timer)
-        localStorage.setItem(CHOSEN_DEGREE, selection.degree)
+        chrome.storage.sync.set(selection, () ->
+            #Empty callback
+        )
 
     this.getSelection = () ->
         return selection
@@ -37,17 +41,10 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
         $rootScope.$broadcast('$teaSelected', selection)
 
     this.init = () ->
-        item = localStorage.getItem(CHOSEN_TEA)
-        if localStorage.getItem(CHOSEN_TEA)
-            #This might not be initialized
-            degs = 'celsius'
-            if localStorage.getItem(CHOSEN_DEGREE)
-                degs = localStorage.getItem(CHOSEN_DEGREE)
-            selection = {
-                tea: localStorage.getItem(CHOSEN_TEA)
-                degree: degs
-                timer: localStorage.getItem(CUSTOM_TIMER)
-            }
+        chrome.storage.sync.get(selection, (stored) ->
+            selection = stored
+            self.broadcastSelection(selection)
+        )
 
     return this
 ])
@@ -86,15 +83,40 @@ module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootS
     return this
 ])
 
-module.run((teaSelection, localize) ->
+module.service('notification', ['$rootScope', ($rootScope) ->
+    self = this
+    this.snd = new Audio('snd/alarm.mp3')
+
+    this.init = () ->
+        closeListener = (id, byUser) ->
+            chrome.notifications.clear(NOTIFICATION_ID, () ->
+                #Empty callback
+            )
+            self.snd.pause()
+
+        chrome.notifications.onClosed.addListener(closeListener)
+        chrome.notifications.onClicked.addListener(closeListener)
+
+
+    this.display = (title, message) ->
+        chrome.notifications.create(NOTIFICATION_ID,
+        {type: 'basic', title: title, message: message, iconUrl: 'img/icon_pruhledna.png'}, () ->
+            if SOUND
+                self.snd.play()
+        )
+
+    return this
+])
+
+module.run((teaSelection, localize, notification) ->
     localize.initLocalizedResources()
     teaSelection.init()
+    notification.init()
 )
 
-@ControlPanelController = ($scope, $timeout, teaSelection, localize) ->
+@ControlPanelController = ($scope, $timeout, teaSelection, localize, notification) ->
     self = this
 
-    $scope.radio = {index: 0}
     $scope.teas = window.teas
     $scope.degrees = window.degrees
 
@@ -103,62 +125,57 @@ module.run((teaSelection, localize) ->
     )
 
     this.setFromSelection = (selection) ->
-        if selection.tea
+        #Pre-init
+        $scope.tea = $scope.teas[0]
+        $scope.degree = $scope.degrees[0]
+
+        $scope.currentSelection = selection
+        if selection[CHOSEN_TEA]
             for tea in $scope.teas
-                if tea.name == selection.tea
+                if tea.name == selection[CHOSEN_TEA]
                     $scope.tea = tea
-                    $scope.tea.checked = true
 
-        if selection.degree
+        if selection[CHOSEN_DEGREE]
             for degree in $scope.degrees
-                if degree.name == selection.degree
-                    $scope.chosenDegree = degree
+                if degree.name == selection[CHOSEN_DEGREE]
+                    $scope.degree = degree
 
-        $scope.time = selection.timer || $scope.tea.time
+        #Pass this to another thread to avoid overwriting the $scope.time by setting $scope.tea (see $watch below)
+        $timeout(() ->
+            if selection[CUSTOM_TIMER] is null
+                $scope.time = $scope.tea.time
+            else
+                $scope.time = selection[CUSTOM_TIMER]
 
-    this.setFromSelection(teaSelection.getSelection())
+            $scope.displayTime = $scope.time
+        , 0)
+        $scope.displayTemp = Utils.convertTemp($scope.degree, tea.temp)
 
-    $scope.setTea = (tea) ->
-        currentSelection = teaSelection.getSelection()
-        currentSelection.tea = tea.name
-        currentSelection.timer = tea.time
-        teaSelection.broadcastSelection(currentSelection)
+    $scope.$watch('tea', (tea) ->
+        if tea
+            $scope.time = tea.time
+            $scope.displayTemp = Utils.convertTemp($scope.degree, $scope.tea.temp)
+    )
 
     $scope.setDegree = (degree) ->
-        currentSelection = teaSelection.getSelection()
-        currentSelection.degree = degree.name
-        currentSelection.timer = $scope.time
-        teaSelection.broadcastSelection(currentSelection)
+        $scope.degree = degree
+        $scope.displayTemp = Utils.convertTemp($scope.degree, $scope.tea.temp)
 
     $scope.start = () ->
-        permission = window.webkitNotifications.checkPermission()
-        if permission != 0
-            window.webkitNotifications.requestPermission($scope.onTimerStart)
-        else
-            $scope.onTimerStart()
-
-    $scope.onTimerStart = () ->
         console.log("Starting timer for: " + $scope.time)
+        to_store = {}
+        to_store[CHOSEN_TEA] = $scope.tea.name
+        to_store[CHOSEN_DEGREE] = $scope.degree.name
+        to_store[CUSTOM_TIMER] = $scope.time
+        teaSelection.storeSelection(to_store)
 
-        teaSelection.storeSelection({
-            tea: $scope.tea.name
-            degree: $scope.chosenDegree.name
-            timer: $scope.time
-        })
-
-        $scope.displayName = $scope.tea.title
         $scope.actualTime = $scope.time
         $scope.timer = true
-        if (window.webkitNotifications.checkPermission() != 0)
-            $("#notification_disabled").show()
-            return
 
         $('#countdownModal').modal()
-        $('#countdownModal').on('hidden', ->
-            $scope.timer = false)
-
-        #Google Analytics
-        Utils.gaTrack(localStorage[CHOSEN_TEA], $scope.chosenDegree.name, $scope.time)
+        $('#countdownModal').on('hidden', () ->
+            $scope.timer = false
+        )
 
         $timeout($scope.onTick, 1000)
 
@@ -172,7 +189,7 @@ module.run((teaSelection, localize) ->
             resetTitle()
             #Display notification only if timer enabled!
             if $scope.timer
-                Utils.displayNotification(localize.getLocalizedString('_AppTitle_'),
+                notification.display(localize.getLocalizedString('_AppTitle_'),
                     localize.getLocalizedString('_NotificationMessage_'))
 
     updateTitle = (time) ->
@@ -181,41 +198,7 @@ module.run((teaSelection, localize) ->
     resetTitle = () ->
         document.title = localize.getLocalizedString('_AppTitle_')
 
-    $scope.$watch('time', (time) ->
-        currentSelection = teaSelection.getSelection()
-        currentSelection.timer = time
-        teaSelection.broadcastSelection(currentSelection)
-    )
-
-ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize']
-
-@InfoPanelController = ($scope, teaSelection) ->
-    self = this
-
-    $scope.$on('$teaSelected', (evt, selection) ->
-        self.setFromSelection(selection)
-    )
-
-    this.setFromSelection = (selection) ->
-        if selection.tea
-            for item in window.teas
-                if item.name == selection.tea
-                    tea = item
-
-        if selection.degree
-            for degree in window.degrees
-                if degree.name == selection.degree
-                    $scope.chosenDegree = degree
-
-        $scope.displayName = tea.title
-        $scope.time = selection.timer || tea.time
-        $scope.displayTime = $scope.time
-        $scope.displayTemp = Utils.convertTemp($scope.chosenDegree, tea.temp)
-
-
-    this.setFromSelection(teaSelection.getSelection())
-
-InfoPanelController.$inject = ['$scope', 'teaSelection']
+ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize', 'notification']
 
 #Utils
 class Utils
@@ -244,40 +227,3 @@ class Utils
 
         return convertedTemp.toString()
 
-    Utils.displayNotification = (title, message) ->
-        permission = window.webkitNotifications.checkPermission()
-        console.log("Permission: #{permission}")
-        window.popup = window.webkitNotifications.createNotification("img/icon.png",
-            title,
-            message)
-
-        Utils.ding('snd/alarm.mp3', window.popup)
-        popup.show()
-        setTimeout("popup.cancel()", CANCEL_TIMEOUT)
-
-    Utils.ding = (mp3, popup) ->
-        snd = new Audio(mp3)
-        if SOUND
-            snd.play()
-            ###
-             stop playing alert sound when notification popup is closed
-             (synchronized with notification popup through CANCEL_TIMEOUT
-             constant which is same in both cases)
-             ###
-            pauseAudio = ->
-                snd.pause()
-            popup.onclose = pauseAudio
-            popup.onclick = pauseAudio
-            setTimeout(pauseAudio, CANCEL_TIMEOUT)
-
-    Utils.gaTrack = (tea, degree, time) ->
-        _gaq.push(['_trackEvent', 'start-tea', tea])
-        _gaq.push(['_trackEvent', 'degree', degree])
-        _gaq.push(['_trackEvent', 'start-time', time])
-
-#Initialization code
-$(document).ready ->
-    #check webkit notification
-    if (!window.webkitNotifications)
-        $("#notification_not_found").show()
-        $('#btn-run').toggleClass('disabled')

@@ -1,18 +1,19 @@
 {
     "name": "Tea clock",
     "description": "Your perfect cup of tea.",
-    "version": "6",
+    "version": "1",
     "manifest_version": 2,
     "app": {
         "background": {
             "scripts": ["js/background.js"]
-        },
-        "icons": {
-            "128": "icon.png"
-        },
-        "permissions": [
-            "notifications"
-        ],
-        "offline_enabled": true
+        }
+    },
+    "permissions": [
+        "storage",
+        "notifications"
+    ],
+    "icons": {
+        "128": "img/icon_pruhledna.png"
     }
+
 }
