@@ -29,7 +29,8 @@ module.exports = (grunt) ->
                     hash: true
 
                 src: [
-                    #'index.html'
+                    'index.html'
+                    'img/icon_pruhledna.png'
                     'js/*.js'
                     'css/*.css'
                     'snd/*'
