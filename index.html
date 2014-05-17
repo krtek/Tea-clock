@@ -8,9 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le styles -->
+    <link type="text/css" href="css/override.css" rel="stylesheet"/>
+    <!--Fonts are defined in file above-->
     <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="libs/angular-slider/angular-slider.min.css" rel="stylesheet"/>
-    <link type="text/css" href="css/override.css" rel="stylesheet"/>
+
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico">
@@ -85,7 +87,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary btn-lg" ng-click="timer = false" data-dismiss="modal"
+                            <button class="btn btn-primary btn-lg btn-block" ng-click="timer = false" data-dismiss="modal"
                                     aria-hidden="true" id="btn-reset"><i
                                     class="glyphicon glyphicon-repeat icon-white"></i>
                                 <span ng-bind-template="{{'_ResetButtonLabel_' | i18n}}"></span>
