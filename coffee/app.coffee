@@ -59,7 +59,7 @@ module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootS
 
     this.successCallback = (data) ->
         self.dictionary = data
-        this.resourceFileLoaded = true;
+        this.resourceFileLoaded = true
         $rootScope.$broadcast('localizeResourcesUpdates')
 
     this.initLocalizedResources = () ->
