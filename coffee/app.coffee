@@ -4,21 +4,21 @@ CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 CHOSEN_DEGREE = "chosen_degree"
 
-@module = angular.module('tea', ['uiSlider'])
+angular.module('tea', ['uiSlider'])
 
 #Filters
-module.filter('time', () ->
+angular.module('tea').filter('time', () ->
     (input) ->
         Utils.formatTime(input)
 )
-module.filter('i18n', ['localize', (localize) ->
+angular.module('tea').filter('i18n', ['localize', (localize) ->
     (input) ->
         if input != undefined
             localize.getLocalizedString(input)
 ])
 
 #Services
-module.service('teaSelection', ['$rootScope', ($rootScope) ->
+angular.module('tea').service('teaSelection', ['$rootScope', ($rootScope) ->
     selection = {
         tea: window.teas[0].name,
         degree: window.degrees[0].name
@@ -51,7 +51,7 @@ module.service('teaSelection', ['$rootScope', ($rootScope) ->
 
     return this
 ])
-module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootScope, $locale, $http, $filter) ->
+angular.module('tea').service('localize', ($rootScope, $locale, $http, $filter) ->
     self = this
     this.dictionary = []
     this.resourceFileLoaded = false
@@ -84,14 +84,14 @@ module.service('localize', ['$rootScope', '$locale', '$http', '$filter', ($rootS
         return result
 
     return this
-])
+)
 
-module.run((teaSelection, localize) ->
+angular.module('tea').run((teaSelection, localize) ->
     localize.initLocalizedResources()
     teaSelection.init()
 )
 
-@ControlPanelController = ($scope, $timeout, teaSelection, localize) ->
+angular.module('tea').controller("ControlPanelController", ($scope, $timeout, teaSelection, localize) ->
     self = this
 
     $scope.radio = {index: 0}
@@ -186,10 +186,9 @@ module.run((teaSelection, localize) ->
         currentSelection.timer = time
         teaSelection.broadcastSelection(currentSelection)
     )
+)
 
-ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localize']
-
-@InfoPanelController = ($scope, teaSelection) ->
+angular.module('tea').controller("InfoPanelController", ($scope, teaSelection) ->
     self = this
 
     $scope.$on('$teaSelected', (evt, selection) ->
@@ -214,8 +213,7 @@ ControlPanelController.$inject = ['$scope', '$timeout', 'teaSelection', 'localiz
 
 
     this.setFromSelection(teaSelection.getSelection())
-
-InfoPanelController.$inject = ['$scope', 'teaSelection']
+)
 
 #Utils
 class Utils
@@ -278,6 +276,6 @@ class Utils
 #Initialization code
 $(document).ready ->
     #check webkit notification
-    if (!window.webkitNotifications)
+    if (not window.webkitNotifications &&  not Notification)
         $("#notification_not_found").show()
         $('#btn-run').toggleClass('disabled')
