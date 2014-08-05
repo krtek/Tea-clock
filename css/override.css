@@ -27,7 +27,7 @@
 	slider span.bar {
 		height:     50%;
 		z-index:    0;
-		background: #eee;
+		background: #d43f3a;
 		left:       0;
 		top:        25%;
 		cursor:     pointer;
@@ -37,7 +37,7 @@
 	}
 
 	slider span.bar.selection {
-		background: #0a0;
+		background: darkgray;
 		opacity:    0.5;
 	}
 
@@ -79,9 +79,11 @@
 	}
 
 	slider span.bubble.limit {
+        display: none;
 	}
 
 	slider span.bubble.low, slider span.bubble.high {
+        display: none;
 	}
 
 	::-ms-tooltip {
