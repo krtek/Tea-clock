@@ -30,9 +30,9 @@ module.exports = (grunt) ->
 
                 src: [
                     'index.html'
-                    'img/icon_pruhledna.png'
                     'js/*.js'
                     'css/*.css'
+                    'img/icon_pruhledna.png'
                     'snd/*'
                     'libs/angular/*.min.js'
                     'libs/angular-touch/*.min.js'
