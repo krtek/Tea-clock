@@ -35,13 +35,12 @@ module.exports = (grunt) ->
                     'css/*.css'
                     'snd/*'
                     'libs/angular/*.min.js'
+                    'libs/angular-touch/*.min.js'
                     'libs/jquery/*.min.js'
+                    'libs/venturerocket-angular-slider/build/*.min.js'
                     'libs/bootstrap/dist/js/*.min.js'
                     'libs/bootstrap/dist/css/*.min.css'
                     'libs/bootstrap/dist/fonts/*'
-                    'libs/jquery-ui/ui/minified/jquery-ui.js'
-                    'libs/angular-slider/angular-slider.min.js'
-                    'libs/angular-slider/angular-slider.min.css'
                 ]
                 dest: 'tea-clock.appcache'
 
