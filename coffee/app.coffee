@@ -91,7 +91,7 @@ angular.module('tea').run((teaSelection, localize) ->
     teaSelection.init()
 )
 
-angular.module('tea').controller("ControlPanelController", ($scope, $timeout, teaSelection, localize) ->
+angular.module('tea').controller("ControlPanelController", ($scope, $timeout, teaSelection, localize, Notification) ->
     self = this
 
     $scope.radio = {index: 0}
@@ -131,11 +131,8 @@ angular.module('tea').controller("ControlPanelController", ($scope, $timeout, te
         teaSelection.broadcastSelection(currentSelection)
 
     $scope.start = () ->
-        permission = window.webkitNotifications.checkPermission()
-        if permission != 0
-            window.webkitNotifications.requestPermission($scope.onTimerStart)
-        else
-            $scope.onTimerStart()
+        Notification.checkPermission()
+        $scope.onTimerStart()
 
     $scope.onTimerStart = () ->
         console.log("Starting timer for: " + $scope.time)
@@ -149,9 +146,6 @@ angular.module('tea').controller("ControlPanelController", ($scope, $timeout, te
         $scope.displayName = $scope.tea.title
         $scope.actualTime = $scope.time
         $scope.timer = true
-        if (window.webkitNotifications.checkPermission() != 0)
-            $("#notification_disabled").show()
-            return
 
         $('#countdownModal').modal()
         $('#countdownModal').on('hidden', ->
@@ -172,7 +166,7 @@ angular.module('tea').controller("ControlPanelController", ($scope, $timeout, te
             resetTitle()
             #Display notification only if timer enabled!
             if $scope.timer
-                Utils.displayNotification(localize.getLocalizedString('_AppTitle_'),
+                Notification.display(localize.getLocalizedString('_AppTitle_'),
                     localize.getLocalizedString('_NotificationMessage_'))
 
     updateTitle = (time) ->
@@ -215,6 +209,47 @@ angular.module('tea').controller("InfoPanelController", ($scope, teaSelection) -
     this.setFromSelection(teaSelection.getSelection())
 )
 
+angular.module('tea').service('Notification', ($timeout) ->
+    snd = new Audio('snd/alarm.mp3')
+    popup = null
+    service = {}
+
+    service.supported = () ->
+        Notification
+
+    service.checkPermission = () ->
+        Notification.requestPermission() unless Notification.permission is "granted"
+
+    service.display = (title, message) ->
+        popup = new Notification(title, {
+            body: message
+            icon: "img/icon.png"
+        })
+        snd.play() if SOUND
+
+        popup.onclick = () ->
+            popup.close()
+
+        popup.onclose = () ->
+            snd.pause()
+
+        $timeout(() ->
+            #hide notification and stop sound
+            cancel()
+        , CANCEL_TIMEOUT)
+
+    cancel = () ->
+        popup.close() if popup
+        snd.pause()
+
+
+    return service
+)
+
+angular.module('tea').controller("RootController", ($scope, Notification) ->
+    $scope.notificationSupported = Notification.supported
+)
+
 #Utils
 class Utils
 
@@ -242,40 +277,7 @@ class Utils
 
         return convertedTemp.toString()
 
-    Utils.displayNotification = (title, message) ->
-        permission = window.webkitNotifications.checkPermission()
-        console.log("Permission: #{permission}")
-        window.popup = window.webkitNotifications.createNotification("img/icon.png",
-            title,
-            message)
-
-        Utils.ding('snd/alarm.mp3', window.popup)
-        popup.show()
-        setTimeout("popup.cancel()", CANCEL_TIMEOUT)
-
-    Utils.ding = (mp3, popup) ->
-        snd = new Audio(mp3)
-        if SOUND
-            snd.play()
-            ###
-             stop playing alert sound when notification popup is closed
-             (synchronized with notification popup through CANCEL_TIMEOUT
-             constant which is same in both cases)
-             ###
-            pauseAudio = ->
-                snd.pause()
-            popup.onclose = pauseAudio
-            popup.onclick = pauseAudio
-            setTimeout(pauseAudio, CANCEL_TIMEOUT)
-
     Utils.gaTrack = (tea, degree, time) ->
         _gaq.push(['_trackEvent', 'start-tea', tea])
         _gaq.push(['_trackEvent', 'degree', degree])
         _gaq.push(['_trackEvent', 'start-time', time])
-
-#Initialization code
-$(document).ready ->
-    #check webkit notification
-    if (not window.webkitNotifications &&  not Notification)
-        $("#notification_not_found").show()
-        $('#btn-run').toggleClass('disabled')
