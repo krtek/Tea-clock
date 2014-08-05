@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!--<html lang="en" ng-app="tea" manifest="tea-clock.appcache"> -->
-<html lang="en" ng-app="tea">
+<html lang="en" ng-app="tea" manifest="tea-clock.appcache">
 <head>
     <meta charset="utf-8">
     <title ng-bind="'_AppTitle_'|i18n">Tea-clock</title>
@@ -29,33 +28,12 @@
         <div class="col-md-12" ng-hide="notificationSupported">
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4 class="alert-heading">Chrome or Firefox required!</h4>
+                <h4 class="alert-heading">Modern browser required!</h4>
                 This application needs <strong>desktop notifications</strong>, which are currently implemented in <strong>Google
-                Chrome</strong> or <strong>Mozilla Firefox</strong>.
+                Chrome</strong>, <strong>Safari</strong> or <strong>Mozilla Firefox</strong>.
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-danger alert-dismissable" id="notification_disabled" hidden="hidden">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4 class="alert-heading">Notifications required!</h4>
-                This application really needs <strong>desktop notifications</strong>, please enable it!
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-info alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4 class="alert-heading">Are you a real tea lover?</h4>
-                Try <a href="https://chrome.google.com/webstore/detail/tea-clock-for-desktop/jhflnmgjaehakhchnneijfcnpkigcakn">
-                Tea clock for desktop</a>! Available <strong>for free</strong> in Chrome web store!
-            </div>
-        </div>
-    </div>
-
 
     <div class="row">
         <div class="col-md-8">
