@@ -4,7 +4,7 @@ CHOSEN_TEA = "chosen_tea"
 CUSTOM_TIMER = "custom_timer"
 CHOSEN_DEGREE = "chosen_degree"
 
-angular.module('tea', ['uiSlider'])
+angular.module('tea', ['vr.directives.slider'])
 
 #Filters
 angular.module('tea').filter('time', () ->
