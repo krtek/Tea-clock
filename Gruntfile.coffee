@@ -37,7 +37,7 @@ module.exports = (grunt) ->
                     'libs/angular/*.min.js'
                     'libs/angular-touch/*.min.js'
                     'libs/jquery/*.min.js'
-                    'libs/venturerocket-angular-slider/build/*.min.js'
+                    'libs/venturocket-angular-slider/build/*.min.js'
                     'libs/bootstrap/dist/js/*.min.js'
                     'libs/bootstrap/dist/css/*.min.css'
                     'libs/bootstrap/dist/fonts/*'
