@@ -9,12 +9,17 @@
   "license": "Apache",
   "private": false,
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-manifest": "~0.4.0",
-    "karma": "~0.10.2",
-    "karma-coffee-preprocessor": "~0.1.0",
-    "karma-junit-reporter": "~0.1.0"
-  }
+    "grunt": "~1.4.1",
+    "grunt-contrib-coffee": "~2.1.0",
+    "grunt-contrib-watch": "~1.1.0",
+    "grunt-manifest": "~0.4.4",
+    "karma": "~6.3.4",
+    "karma-coffee-preprocessor": "~1.0.1",
+    "karma-junit-reporter": "~2.0.1"
+  },
+  "dependencies": {
+    "coffeescript": "^2.5.1"
+  },"scripts": {
+  "build": "grunt"
+}
 }
