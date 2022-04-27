@@ -9,7 +9,7 @@
   "license": "Apache",
   "private": false,
   "devDependencies": {
-    "grunt": "~1.4.1",
+    "grunt": "~1.5.2",
     "grunt-contrib-coffee": "~2.1.0",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-manifest": "~0.4.4",
