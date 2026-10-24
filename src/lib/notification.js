@@ -13,19 +13,24 @@ export function checkPermission() {
     }
 }
 
-export function display(title, message) {
-    popup = new Notification(title, { body: message, icon: "/img/logo.png" })
-
+export function playAlarm() {
     sound ??= new Audio('/snd/alarm.mp3')
+    sound.currentTime = 0
     sound.play()
-
-    popup.onclick = () => popup.close()
-    popup.onclose = () => sound.pause()
-
-    setTimeout(cancel, CANCEL_TIMEOUT)
+    setTimeout(stopAlarm, CANCEL_TIMEOUT)
 }
 
-function cancel() {
-    popup?.close()
+export function stopAlarm() {
     sound?.pause()
+}
+
+// Best-effort OS notification; the in-page ready dialog (CountdownModal) is
+// the reliable fallback since permission can be denied, ignored, or just
+// not supported.
+export function display(title, message) {
+    if (!supported() || Notification.permission !== "granted") return
+
+    popup = new Notification(title, { body: message, icon: "/img/icon-192.png" })
+    popup.onclick = () => popup.close()
+    setTimeout(() => popup?.close(), CANCEL_TIMEOUT)
 }

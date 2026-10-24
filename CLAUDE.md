@@ -29,11 +29,13 @@ No test watch mode script is defined; use `npx vitest` directly for watch mode.
 - **`src/lib/components/`** — `TeaSelector` (chip row), `TimeSlider` (a native `<input type="range">`, no slider dependency), `DegreeButtons` (segmented toggle), `CountdownModal` (full-screen takeover with an SVG circular progress ring). All read/write the shared `selection` state directly rather than receiving it as props. There's no separate "info panel" — the single-column layout shows the live tea/time/temp values inline, so one view is both the editor and the summary.
 - **`src/App.svelte`** — root layout; owns the countdown modal's open/snapshot state and the "Steep" click handler (checks notification permission, persists selection, starts the countdown).
 - **`src/app.css`** — design tokens (`--cream`, `--paper`, `--ceramic`, `--matcha`, `--amber`, `--ink`) as CSS custom properties on `:root`, plus the self-hosted Figtree font (`@fontsource/figtree`, no Bootstrap/jQuery). Component-specific styles live in each `.svelte` file's scoped `<style>` block.
-- **`public/img/logo.png`** — the teapot-clock logo; reused as the header image, favicon, PWA manifest icon, and notification icon. Replacing it only requires swapping this one file.
+- **`public/img/`** — the teapot-clock logo, pre-rendered at the sizes each use needs: `logo.png` (256×256, header image), `favicon.png` (48×48), `apple-touch-icon.png` (180×180), `icon-192.png`/`icon-512.png` (PWA manifest icons, `icon-192.png` doubles as the notification icon). To swap the logo, resize the new source into each of these (e.g. `sips -z <size> <size> source.png --out public/img/<name>.png`) rather than pointing multiple uses at one oversized file.
 
 ### Countdown timer gotcha
 
 `CountdownModal.svelte` uses two separate `$effect`s: one starts/stops the `setInterval` and must only *read* the `open`/`time` props, never `actualTime`; a second, separate effect reads `actualTime` to update `document.title`. Combining them into one effect creates a self-triggering loop — the effect would depend on `actualTime` (because it reads it) while also resetting `actualTime` on every run, so the countdown never advances. Keep the write-effect and the read-effect apart.
+
+On reaching zero the modal doesn't close itself — it switches to a `finished` ready state (full ring, checkmark, "Close" button) and stays open until the user dismisses it. This is the reliable path: the native `Notification` (`src/lib/notification.js`'s `display()`) is best-effort and silently no-ops without permission, so the in-page dialog — not the OS notification — is what the user can actually count on seeing. The alarm sound (`playAlarm()`/`stopAlarm()`) is likewise decoupled from the native notification's lifecycle so it plays regardless of permission.
 
 ## Notes
 
