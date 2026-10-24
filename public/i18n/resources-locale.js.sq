@@ -45,9 +45,9 @@
 	    "description":"Steep button label"
 	},
 	{
-	    "key":"_ResetButtonLabel_",
-	    "value":"Nga e para",
-	    "description":"Reset button label"
+	    "key":"_StopButtonLabel_",
+	    "value":"Ndalo",
+	    "description":"Stop button label"
 	},
 	{
 	    "key":"_WhiteTea_",

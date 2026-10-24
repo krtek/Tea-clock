@@ -45,9 +45,9 @@
 	    "description":"Steep button label"
 	},
 	{
-	    "key":"_ResetButtonLabel_",
-	    "value":"Zrušit",
-	    "description":"Reset button label"
+	    "key":"_StopButtonLabel_",
+	    "value":"Zastavit",
+	    "description":"Stop button label"
 	},
 	{
 	    "key":"_WhiteTea_",
