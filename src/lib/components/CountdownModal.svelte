@@ -72,6 +72,11 @@
         </div>
         {#if finished}
             <p class="ready-message">{t('_NotificationMessage_')}</p>
+        {:else}
+            <p class="stay-warning">
+                <strong>Keep this page in the foreground while it steeps.</strong>
+                <span>Safari (and most phones) pause timers in the background, so you might get the alert late.</span>
+            </p>
         {/if}
         <button type="button" class="cancel" onclick={close}>
             {finished ? 'Close' : t('_ResetButtonLabel_')}
@@ -146,6 +151,25 @@
         margin: -16px 0 0;
         font-size: 1.1rem;
         text-align: center;
+    }
+
+    .stay-warning {
+        margin: -16px 0 0;
+        max-width: 280px;
+        text-align: center;
+    }
+
+    .stay-warning strong {
+        display: block;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .stay-warning span {
+        display: block;
+        margin-top: 6px;
+        font-size: 0.85rem;
+        opacity: 0.7;
     }
 
     .cancel {
