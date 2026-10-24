@@ -38,6 +38,10 @@ No test watch mode script is defined; use `npx vitest` directly for watch mode.
 
 On reaching zero the modal doesn't close itself — it switches to a `finished` ready state (full ring, checkmark, "Close" button) and stays open until the user dismisses it. This is the reliable path: the native `Notification` (`src/lib/notification.js`'s `display()`) is best-effort and silently no-ops without permission, so the in-page dialog — not the OS notification — is what the user can actually count on seeing. The alarm sound (`playAlarm()`/`stopAlarm()`) is likewise decoupled from the native notification's lifecycle so it plays regardless of permission.
 
+Because the modal stays open past zero, `tick()` must `clearInterval(intervalId)` itself the moment `actualTime <= 0` — the `setInterval` only otherwise stops via the start/stop effect's cleanup, which only re-runs when `open` changes, and `open` no longer flips to false at zero. Forgetting this makes `tick()` keep firing every second for as long as the ready dialog is shown, re-triggering the notification and alarm sound on every tick.
+
+Notification permission is requested once, on page load (`App.svelte`'s `onMount`), not on the first "Steep" click — `checkPermission()` is a no-op once permission is already granted or denied, so there's no need to call it again later.
+
 ## Notes
 
 - `vercel.json` pins `framework: "vite"`, `buildCommand: "npm run build"`, `outputDirectory: "dist"` explicitly — the Vercel project's dashboard settings predate this rewrite (it was a no-build static site before), and without this file Vercel served the raw repo instead of running the Vite build, producing an unbundled `index.html` (`import { mount } from 'svelte'` as a literal bare specifier, 404s on `/manifest.json`). If deploys ever regress to that symptom again, check this file is still present before anything else.

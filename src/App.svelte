@@ -15,6 +15,7 @@
     onMount(() => {
         initSelection()
         loadLocale()
+        checkPermission()
     })
 
     let tea = $derived(teas.find((x) => x.name === selection.tea))
@@ -29,7 +30,6 @@
     })
 
     function steep() {
-        checkPermission()
         storeSelection()
         trackStart(selection.tea, selection.degree, selection.timer)
         countdown = { teaTitle: tea.title, time: selection.timer }

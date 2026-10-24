@@ -30,7 +30,7 @@ export function stopAlarm() {
 export function display(title, message) {
     if (!supported() || Notification.permission !== "granted") return
 
-    popup = new Notification(title, { body: message, icon: "/img/icon-192.png" })
+    popup = new Notification(title, { body: message, icon: "/img/icon-192.png", silent: false })
     popup.onclick = () => popup.close()
     setTimeout(() => popup?.close(), CANCEL_TIMEOUT)
 }
