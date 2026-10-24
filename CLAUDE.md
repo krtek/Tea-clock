@@ -40,5 +40,5 @@ On reaching zero the modal doesn't close itself — it switches to a `finished` 
 
 ## Notes
 
-- No `vercel.json`; Vercel auto-detects the Vite preset and deploys `dist/`.
+- `vercel.json` pins `framework: "vite"`, `buildCommand: "npm run build"`, `outputDirectory: "dist"` explicitly — the Vercel project's dashboard settings predate this rewrite (it was a no-build static site before), and without this file Vercel served the raw repo instead of running the Vite build, producing an unbundled `index.html` (`import { mount } from 'svelte'` as a literal bare specifier, 404s on `/manifest.json`). If deploys ever regress to that symptom again, check this file is still present before anything else.
 - The Chrome Web Store listing just points at the live URL — it's independent of anything in this repo.
