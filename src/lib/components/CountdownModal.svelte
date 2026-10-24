@@ -79,7 +79,7 @@
             </p>
         {/if}
         <button type="button" class="cancel" onclick={close}>
-            {finished ? 'Close' : t('_ResetButtonLabel_')}
+            {finished ? 'Close' : t('_StopButtonLabel_')}
         </button>
     </div>
 {/if}
