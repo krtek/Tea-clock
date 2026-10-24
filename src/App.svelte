@@ -10,6 +10,7 @@
     import TimeSlider from './lib/components/TimeSlider.svelte'
     import DegreeButtons from './lib/components/DegreeButtons.svelte'
     import CountdownModal from './lib/components/CountdownModal.svelte'
+    import InstallFooter from './lib/components/InstallFooter.svelte'
 
     onMount(() => {
         initSelection()
@@ -73,6 +74,8 @@
 
         <button type="button" class="steep" onclick={steep}>{t('_SteepButtonLabel_')}</button>
     </main>
+
+    <InstallFooter />
 </div>
 
 <CountdownModal bind:open={modalOpen} teaTitle={countdown.teaTitle} time={countdown.time} />
