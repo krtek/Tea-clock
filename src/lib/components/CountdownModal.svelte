@@ -1,7 +1,7 @@
 <script>
     import { t } from '../i18n.svelte.js'
     import { formatTime } from '../utils.js'
-    import { display } from '../notification.js'
+    import { display, playAlarm, stopAlarm } from '../notification.js'
 
     let { open = $bindable(false), teaTitle, time } = $props()
 
@@ -9,15 +9,23 @@
     const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
     let actualTime = $state(0)
+    let finished = $state(false)
     let progress = $derived(time > 0 ? actualTime / time : 0)
-    let dashOffset = $derived(CIRCUMFERENCE * (1 - progress))
+    let dashOffset = $derived(finished ? 0 : CIRCUMFERENCE * (1 - progress))
 
     function tick() {
         actualTime -= 1
         if (actualTime <= 0) {
-            open = false
+            finished = true
+            playAlarm()
             display(t('_AppTitle_'), t('_NotificationMessage_'))
         }
+    }
+
+    function close() {
+        open = false
+        finished = false
+        stopAlarm()
     }
 
     // Starts/stops the interval; must not itself read actualTime, or every
@@ -25,6 +33,7 @@
     $effect(() => {
         if (!open) return
         actualTime = time
+        finished = false
         const intervalId = setInterval(tick, 1000)
         return () => clearInterval(intervalId)
     })
@@ -32,7 +41,8 @@
     // Reflects the ticking actualTime in the title; App.svelte resets the
     // title back to _AppTitle_ once the modal closes.
     $effect(() => {
-        if (open) document.title = `[${formatTime(actualTime)}] ${t('_AppTitle_')}`
+        if (!open) return
+        document.title = finished ? `${t('_NotificationMessage_')} — ${t('_AppTitle_')}` : `[${formatTime(actualTime)}] ${t('_AppTitle_')}`
     })
 </script>
 
@@ -44,6 +54,7 @@
                 <circle class="track" cx="100" cy="100" r={RADIUS} />
                 <circle
                     class="progress"
+                    class:done={finished}
                     cx="100"
                     cy="100"
                     r={RADIUS}
@@ -51,9 +62,14 @@
                     stroke-dashoffset={dashOffset}
                 />
             </svg>
-            <span class="ring-time">{formatTime(actualTime)}</span>
+            <span class="ring-time">{finished ? '✓' : formatTime(actualTime)}</span>
         </div>
-        <button type="button" class="cancel" onclick={() => (open = false)}>{t('_ResetButtonLabel_')}</button>
+        {#if finished}
+            <p class="ready-message">{t('_NotificationMessage_')}</p>
+        {/if}
+        <button type="button" class="cancel" onclick={close}>
+            {finished ? 'Close' : t('_ResetButtonLabel_')}
+        </button>
     </div>
 {/if}
 
@@ -105,6 +121,10 @@
         transition: stroke-dashoffset 1s linear;
     }
 
+    .progress.done {
+        stroke: var(--matcha);
+    }
+
     .ring-time {
         position: absolute;
         inset: 0;
@@ -114,6 +134,12 @@
         font-size: 2.5rem;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
+    }
+
+    .ready-message {
+        margin: -16px 0 0;
+        font-size: 1.1rem;
+        text-align: center;
     }
 
     .cancel {
