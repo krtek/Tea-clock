@@ -13,9 +13,15 @@
     let progress = $derived(time > 0 ? actualTime / time : 0)
     let dashOffset = $derived(finished ? 0 : CIRCUMFERENCE * (1 - progress))
 
+    let intervalId
+
     function tick() {
         actualTime -= 1
         if (actualTime <= 0) {
+            // Stop ticking here, not just on close() — the modal stays open
+            // after finishing, so without this tick() would keep firing
+            // every second and re-trigger the notification/sound each time.
+            clearInterval(intervalId)
             finished = true
             playAlarm()
             display(t('_AppTitle_'), t('_NotificationMessage_'))
@@ -34,7 +40,7 @@
         if (!open) return
         actualTime = time
         finished = false
-        const intervalId = setInterval(tick, 1000)
+        intervalId = setInterval(tick, 1000)
         return () => clearInterval(intervalId)
     })
 
