@@ -35,11 +35,6 @@
 	    "description":"Time tooltip"
 	},
 	{
-	    "key":"_TemperatureLabel_",
-	    "value":"Njësi temperature:",
-	    "description":"Temperature label"
-	},
-	{
 	    "key":"_TemperatureTooltip_",
 	    "value":"Temperatura ideale sipa llojit.",
 	    "description":"Temperature tooltip"
@@ -78,11 +73,6 @@
 	    "key":"_BlackTea_",
 	    "value":"Çaj i zi",
 	    "description":"Black tea name"
-	},
-	{
-	    "key":"_HerbalTea_",
-	    "value":"Herbal",
-	    "description":"Herbal tea name"
 	},
 	{
 	    "key":"_FruitTea_",

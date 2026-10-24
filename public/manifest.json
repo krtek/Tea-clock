@@ -4,10 +4,9 @@
     "description": "Simple but efficient tea timer.",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#ffffff",
+    "background_color": "#fbf7ef",
+    "theme_color": "#fbf7ef",
     "icons": [
-        { "src": "img/icon16.png", "sizes": "16x16", "type": "image/png" },
-        { "src": "img/icon.png", "sizes": "128x128", "type": "image/png" }
+        { "src": "img/logo.png", "sizes": "612x561", "type": "image/png" }
     ]
 }

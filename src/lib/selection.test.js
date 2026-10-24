@@ -9,7 +9,7 @@ describe('selection', () => {
         selection.timer = undefined
     })
 
-    it('defaults to white tea / celsius on empty storage', () => {
+    it('leaves the current selection untouched when storage is empty', () => {
         init()
         expect(selection.tea).toEqual('white')
         expect(selection.degree).toEqual('celsius')
@@ -17,13 +17,13 @@ describe('selection', () => {
 
     it('stores selection to local storage', () => {
         selection.tea = 'black'
-        selection.degree = 'kelvin'
+        selection.degree = 'fahrenheit'
         selection.timer = 666
         store()
 
         expect(localStorage.getItem('chosen_tea')).toEqual('black')
         expect(localStorage.getItem('custom_timer')).toEqual('666')
-        expect(localStorage.getItem('chosen_degree')).toEqual('kelvin')
+        expect(localStorage.getItem('chosen_degree')).toEqual('fahrenheit')
     })
 
     it('upgrades a user with no chosen_degree in storage to celsius', () => {
@@ -40,12 +40,12 @@ describe('selection', () => {
     it('restores a normal user selection from storage', () => {
         localStorage.setItem('chosen_tea', 'oolong')
         localStorage.setItem('custom_timer', '10')
-        localStorage.setItem('chosen_degree', 'kelvin')
+        localStorage.setItem('chosen_degree', 'fahrenheit')
 
         init()
 
         expect(selection.tea).toEqual('oolong')
         expect(selection.timer).toEqual('10')
-        expect(selection.degree).toEqual('kelvin')
+        expect(selection.degree).toEqual('fahrenheit')
     })
 })

@@ -1,38 +1,35 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
+@import "@fontsource/figtree/400.css";
+@import "@fontsource/figtree/500.css";
+@import "@fontsource/figtree/600.css";
+@import "@fontsource/figtree/700.css";
 
-/* Override some defaults */
-.well {
-    min-height: 515px; /* To make both blocks same height */
+:root {
+    --cream: #fbf7ef;
+    --paper: #ffffff;
+    --ceramic: #dcbd92;
+    --ink: #2b2420;
+    --matcha: #3f6e46;
+    --matcha-dark: #335a39;
+    --amber: #e2a33d;
 }
 
-.form-actions {
-    padding: 19px 20px 10px;
-    margin-top: 0px;
+* {
+    box-sizing: border-box;
 }
 
-.btn-group {
-    display: block;
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Figtree", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Fix twitter bootstrap bug */
-.form-horizontal .form-group {
-    margin-left: 0px;
+button {
+    font-family: inherit;
 }
 
-.time-slider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 500px;
-}
-
-.time-slider input[type="range"] {
-    flex: 1;
-    accent-color: #d43f3a;
-}
-
-.time-slider-bubble {
-    font-size: 0.7em;
-    font-family: sans-serif;
-    min-width: 3em;
+:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 2px;
 }
