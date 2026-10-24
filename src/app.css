@@ -1,0 +1,38 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Override some defaults */
+.well {
+    min-height: 515px; /* To make both blocks same height */
+}
+
+.form-actions {
+    padding: 19px 20px 10px;
+    margin-top: 0px;
+}
+
+.btn-group {
+    display: block;
+}
+
+/* Fix twitter bootstrap bug */
+.form-horizontal .form-group {
+    margin-left: 0px;
+}
+
+.time-slider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 500px;
+}
+
+.time-slider input[type="range"] {
+    flex: 1;
+    accent-color: #d43f3a;
+}
+
+.time-slider-bubble {
+    font-size: 0.7em;
+    font-family: sans-serif;
+    min-width: 3em;
+}
