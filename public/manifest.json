@@ -1,0 +1,13 @@
+{
+    "name": "Tea-clock",
+    "short_name": "Tea-clock",
+    "description": "Simple but efficient tea timer.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        { "src": "img/icon16.png", "sizes": "16x16", "type": "image/png" },
+        { "src": "img/icon.png", "sizes": "128x128", "type": "image/png" }
+    ]
+}
