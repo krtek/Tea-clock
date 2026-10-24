@@ -14,7 +14,7 @@ export function checkPermission() {
 }
 
 export function display(title, message) {
-    popup = new Notification(title, { body: message, icon: "/img/icon.png" })
+    popup = new Notification(title, { body: message, icon: "/img/logo.png" })
 
     sound ??= new Audio('/snd/alarm.mp3')
     sound.play()

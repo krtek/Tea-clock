@@ -19,8 +19,8 @@ describe('convertTemp', () => {
         expect(convertTemp(celsius, '99')).toEqual('99')
     })
 
-    it('converts a single value to another unit', () => {
-        expect(convertTemp(fahrenheit, '99')).toEqual('210.2')
+    it('converts a single value to another unit, rounded to a whole number', () => {
+        expect(convertTemp(fahrenheit, '99')).toEqual('210')
     })
 
     it('converts each side of a range', () => {

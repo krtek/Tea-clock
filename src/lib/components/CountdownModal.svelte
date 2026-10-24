@@ -5,7 +5,12 @@
 
     let { open = $bindable(false), teaTitle, time } = $props()
 
+    const RADIUS = 90
+    const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+
     let actualTime = $state(0)
+    let progress = $derived(time > 0 ? actualTime / time : 0)
+    let dashOffset = $derived(CIRCUMFERENCE * (1 - progress))
 
     function tick() {
         actualTime -= 1
@@ -32,27 +37,93 @@
 </script>
 
 {#if open}
-    <div class="modal-backdrop fade in"></div>
-    <div class="modal fade in" style="display:block" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" aria-hidden="true" onclick={() => (open = false)}>&times;</button>
-                    <h3>{t(teaTitle)}</h3>
-                </div>
-                <div class="modal-body">
-                    <div style="text-align: center;"><h1>{formatTime(actualTime)}</h1></div>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: {actualTime / (time / 100)}%" id="countdownBar"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary btn-lg" id="btn-reset" onclick={() => (open = false)}>
-                        <i class="glyphicon glyphicon-repeat icon-white"></i>
-                        <span>{t('_ResetButtonLabel_')}</span>
-                    </button>
-                </div>
-            </div>
+    <div class="countdown" role="dialog" aria-modal="true" aria-label={t(teaTitle)}>
+        <h2>{t(teaTitle)}</h2>
+        <div class="ring">
+            <svg viewBox="0 0 200 200">
+                <circle class="track" cx="100" cy="100" r={RADIUS} />
+                <circle
+                    class="progress"
+                    cx="100"
+                    cy="100"
+                    r={RADIUS}
+                    stroke-dasharray={CIRCUMFERENCE}
+                    stroke-dashoffset={dashOffset}
+                />
+            </svg>
+            <span class="ring-time">{formatTime(actualTime)}</span>
         </div>
+        <button type="button" class="cancel" onclick={() => (open = false)}>{t('_ResetButtonLabel_')}</button>
     </div>
 {/if}
+
+<style>
+    .countdown {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        padding: 24px;
+        background: var(--cream);
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .ring {
+        position: relative;
+        width: min(70vw, 260px);
+        aspect-ratio: 1;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    circle {
+        fill: none;
+        stroke-width: 14;
+    }
+
+    .track {
+        stroke: var(--ceramic);
+        opacity: 0.35;
+    }
+
+    .progress {
+        stroke: var(--amber);
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s linear;
+    }
+
+    .ring-time {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .cancel {
+        padding: 14px 32px;
+        border: none;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+</style>

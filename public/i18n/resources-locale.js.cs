@@ -35,11 +35,6 @@
 	    "description":"Time tooltip"
 	},
 	{
-	    "key":"_TemperatureLabel_",
-	    "value":"Stupně:",
-	    "description":"Temperature label"
-	},
-	{
 	    "key":"_TemperatureTooltip_",
 	    "value":"Při této teplotě by se měl vybraný čaj louhovat.",
 	    "description":"Temperature tooltip"
@@ -78,11 +73,6 @@
 	    "key":"_BlackTea_",
 	    "value":"Černý čaj",
 	    "description":"Black tea name"
-	},
-	{
-	    "key":"_HerbalTea_",
-	    "value":"Bylinkový čaj",
-	    "description":"Herbal tea name"
 	},
 	{
 	    "key":"_FruitTea_",

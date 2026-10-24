@@ -6,7 +6,7 @@ export function formatTime(secs) {
 }
 
 export function convertTemp(degree, temperature) {
-    const convert = (tempString) => degree.formula(parseInt(tempString))
+    const convert = (tempString) => Math.round(degree.formula(parseInt(tempString)))
 
     const tempIntervPos = temperature.search('-')
     let convertedTemp
